@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Mareu</string>
+    <string name="meeting_room">Meeting Room</string>
+    <string name="topic">Topic</string>
+    <string name="ends">Ends</string>
+    <string name="participants">Participants</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image_representing_meeting_room">Image representing meeting room</string>
+    <string name="delete_with_trashcan_icon">Delete button with trashcan icon</string>
+    <string name="date">Date</string>
+    <string name="picture_of_the_meeting_room">Picture of the meeting room</string>
+    <string name="starts">Starts</string>
+    <string name="delete">Delete</string>
+    <string name="meeting_vector">Meeting Vector</string>
+    <string name="set_date">Set date</string>
+    <string name="set_time">Set time</string>
+    <string name="invite_collaborators">Invite collaborators</string>
+    <string name="check_icon_to_confirm_meeting">check icon to confirm meeting</string>
+    <string name="ma_reu">Ma réu</string>
+</resources>
