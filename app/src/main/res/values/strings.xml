@@ -17,4 +17,22 @@
     <string name="invite_collaborators">Invite collaborators</string>
     <string name="check_icon_to_confirm_meeting">check icon to confirm meeting</string>
     <string name="ma_reu">Ma réu</string>
+    <string name="delete_alert_dialog_title">Delete meeting</string>
+    <string name="delete_alert_dialog_message">Do you really want to delete this meeting?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="meeting_informations">Meeting information\'s</string>
+    <string-array name="meeting_room_spinner">
+        <item>SELECT A MEETING ROOM</item>
+        <item>PARIS</item>
+        <item>LONDON</item>
+        <item>MADRID</item>
+        <item>MILAN</item>
+        <item>BUCHAREST</item>
+        <item>VIENNA</item>
+        <item>BERLIN</item>
+        <item>PRAGUE</item>
+        <item>AMSTERDAM</item>
+        <item>BRUSSELS</item>
+    </string-array>
 </resources>

@@ -8,16 +8,18 @@ public class Meeting implements Parcelable {
     String mMeetingName;
     String mMeetingRoomName;
     int mMeetingRoomDrawable;
+    String mMeetingRoomUrl;
     long mDate;
     long mStartingTime;
     long mFinishingTime;
     String mTopic;
     String mParticipatingCollaborators;
 
-    public Meeting(String meetingName, String meetingRoomName, int meetingRoomDrawable, long date, long startingTime, long finishingTime, String topic, String participatingCollaborators) {
+    public Meeting(String meetingName, String meetingRoomName, int meetingRoomDrawable, String meetingRoomUrl, long date, long startingTime, long finishingTime, String topic, String participatingCollaborators) {
         mMeetingName = meetingName;
         mMeetingRoomName = meetingRoomName;
         mMeetingRoomDrawable = meetingRoomDrawable;
+        mMeetingRoomUrl = meetingRoomUrl;
         mDate = date;
         mStartingTime = startingTime;
         mFinishingTime = finishingTime;
@@ -111,6 +113,14 @@ public class Meeting implements Parcelable {
     public void setMeetingName(String meetingName) {
         mMeetingName = meetingName;
     }
+    public String getMeetingRoomUrl() {
+        return mMeetingRoomUrl;
+    }
+
+    public void setMeetingRoomUrl(String meetingRoomUrl) {
+        mMeetingRoomUrl = meetingRoomUrl;
+    }
+
 
     @Override
     public int describeContents() {
@@ -122,6 +132,7 @@ public class Meeting implements Parcelable {
         parcel.writeString(mMeetingName);
         parcel.writeString(mMeetingRoomName);
         parcel.writeInt(mMeetingRoomDrawable);
+        parcel.writeString(mMeetingRoomUrl);
         parcel.writeLong(mDate);
         parcel.writeLong(mStartingTime);
         parcel.writeLong(mFinishingTime);
