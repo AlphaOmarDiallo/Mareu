@@ -2,13 +2,10 @@ package com.alphaomardiallo.mareu.events;
 
 import com.alphaomardiallo.mareu.models.Meeting;
 
-/**
- * Event fired when avatar of a meeting is clicked
- */
-public class OpenMeetingEvent {
+public class DeleteMeetingEvent {
 
-     /**
-     * Meeting to open
+    /**
+     * Meeting to delete
      */
     public Meeting meeting;
 
@@ -18,7 +15,7 @@ public class OpenMeetingEvent {
      * @param meeting-
      */
 
-    public OpenMeetingEvent(Meeting meeting) {
+    public DeleteMeetingEvent(Meeting meeting) {
         this.meeting = meeting;
     }
 }

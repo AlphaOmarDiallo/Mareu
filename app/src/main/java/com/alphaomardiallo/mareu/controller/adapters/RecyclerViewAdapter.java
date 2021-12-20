@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alphaomardiallo.mareu.R;
+import com.alphaomardiallo.mareu.events.DeleteMeetingEvent;
 import com.alphaomardiallo.mareu.events.OpenMeetingEvent;
 import com.alphaomardiallo.mareu.models.Meeting;
 import com.bumptech.glide.Glide;
@@ -57,8 +58,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mImageButtonDeleteMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
                 Log.d(TAG, "onClick: was used to delete an item.");
+
             }
         });
 

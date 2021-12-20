@@ -92,7 +92,7 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/textViewMetingName"
+                        android:id="@+id/editiTaextMetingNameCreationActivity"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="4dp"
@@ -163,6 +163,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@color/whiteSmoke"
+                android:hint="Enter participants email, jane.doe@lamzone.com, john.doe@lamzone.com, ..."
                 app:layout_constraintBottom_toTopOf="@+id/buttonAddMeetingCreationActivity"
                 app:layout_constraintEnd_toEndOf="@+id/editTextTextMultiLineTopicMeetingCreation"
                 app:layout_constraintStart_toStartOf="@+id/editTextTextMultiLineTopicMeetingCreation"
@@ -175,7 +176,6 @@
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/silverGreen"
                 android:text="@string/invite_collaborators"
-                android:hint="john.doe@lamzone.com, jane.doe@lamzone.com, ..."
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/editTextParticipantsMeetingCreation"
                 app:layout_constraintStart_toStartOf="@+id/editTextParticipantsMeetingCreation"

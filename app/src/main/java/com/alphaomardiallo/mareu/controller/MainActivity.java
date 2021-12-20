@@ -1,11 +1,14 @@
 package com.alphaomardiallo.mareu.controller;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,10 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alphaomardiallo.mareu.R;
 import com.alphaomardiallo.mareu.di.DI;
+import com.alphaomardiallo.mareu.events.DeleteMeetingEvent;
 import com.alphaomardiallo.mareu.events.OpenMeetingEvent;
 import com.alphaomardiallo.mareu.models.Meeting;
 import com.alphaomardiallo.mareu.service.MeetingApiService;
 import com.alphaomardiallo.mareu.controller.adapters.RecyclerViewAdapter;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.greenrobot.eventbus.EventBus;
@@ -80,6 +85,37 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(MEETING, meeting);
         Log.d(TAG, "onOpenMeetingEvent: opening with intent");
         startActivity(intent);
+    }
+
+    @Subscribe
+    public void onDeleteMeetingEvent(DeleteMeetingEvent event) {
+        Meeting meeting = event.meeting;
+        MaterialAlertDialogBuilder builder =  new MaterialAlertDialogBuilder(this);
+        builder.setMessage(R.string.delete_alert_dialog_message).setTitle(R.string.delete_alert_dialog_title);
+        builder.setCancelable(false)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mMeetings.remove(meeting);
+                        initRecyclerView();
+                        Toast.makeText(MainActivity.this, "Meeting deleted", Toast.LENGTH_SHORT);
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initRecyclerView();
+        Log.d(TAG, "onResume: called");
     }
 
     @Override

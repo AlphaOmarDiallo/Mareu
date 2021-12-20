@@ -52,6 +52,7 @@
                 android:id="@+id/textViewMeetingNameDetailActivity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:padding="4dp"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -61,6 +62,7 @@
                 android:id="@+id/textViewMeetingRoomNameDetailActivity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:padding="8dp"
                 android:textSize="16sp"
                 tools:text="@string/meeting_room" />
@@ -80,6 +82,7 @@
         style="@style/cardView_detail_activity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/cardView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,7 +146,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
-
+        android:textColor="@color/black"
         style="@style/cardView_detail_activity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -162,7 +165,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="@string/starts"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textViewStartingTimeDisplayDetailActivity"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -171,53 +176,17 @@
             <TextView
                 android:id="@+id/textViewStartingTimeDisplayDetailActivity"
                 style="@style/textView_detail_activity"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/textViewEndingTimeDetailActivity"
-                app:layout_constraintEnd_toStartOf="@+id/view"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textViewStartingTimeDetailActivity"
-                tools:text="14:00" />
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="2dp"
-                android:layout_height="0dp"
-                android:background="@color/darkSlateGray"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textViewEndingTimeDetailActivity"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textViewStartingTimeDisplayDetailActivity"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/textViewEndingTimeDetailActivity"
-                style="@style/textView_detail_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="@string/ends"
-                app:layout_constraintEnd_toStartOf="@+id/textViewEndingTimeDisplayDetailActivity"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/view"
-                app:layout_constraintTop_toTopOf="@+id/textViewEndingTimeDisplayDetailActivity" />
-
-            <TextView
-                android:id="@+id/textViewEndingTimeDisplayDetailActivity"
-                style="@style/textView_detail_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textViewEndingTimeDetailActivity"
+                app:layout_constraintStart_toEndOf="@+id/textViewStartingTimeDetailActivity"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="14:45" />
+                tools:text="14:00" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -226,6 +195,7 @@
         android:id="@+id/cardView2"
         style="@style/cardView_detail_activity"
         android:layout_width="0dp"
+        android:textColor="@color/black"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -254,19 +224,5 @@
                 tools:text="List of participants" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButtonDeleteRMeetingDetailActivity"
-        style="@style/FloatingActionButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:clickable="true"
-        android:contentDescription="@string/delete"
-        android:focusable="true"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineSectionOneDetailActivity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Mareu" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.Mareu" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/cornFlowerBlue</item>
         <item name="colorPrimaryVariant">@color/steelBlue</item>

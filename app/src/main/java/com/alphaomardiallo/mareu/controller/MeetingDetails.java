@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.*;
 
 import com.alphaomardiallo.mareu.R;
@@ -32,6 +34,7 @@ public class MeetingDetails extends AppCompatActivity {
     private TextView mTextViewEndingTime;
     private TextView mTextViewParticipantsDisplay;
 
+    private Meeting meeting;
     private String meetingName;
     private int meetingID;
 
@@ -48,10 +51,8 @@ public class MeetingDetails extends AppCompatActivity {
         mTextViewMeetingName = findViewById(R.id.textViewMeetingNameDetailActivity);
         mTextViewParticipantsDisplay = findViewById(R.id.textViewMeetingRoomNameDetailActivity);
         mTextViewTopicDisplay = findViewById(R.id.textViewTopicDisplayDetailActivity);
-        mFloatingActionButtonDeleteMeeting = findViewById(R.id.floatingActionButtonDeleteRMeetingDetailActivity);
         mTextViewDateDisplay = findViewById(R.id.textViewDateDisplayDetailActivity);
         mTextViewStartingTime = findViewById(R.id.textViewStartingTimeDisplayDetailActivity);
-        mTextViewEndingTime = findViewById(R.id.textViewEndingTimeDisplayDetailActivity);
         mTextViewParticipantsDisplay = findViewById(R.id.textViewParticipantsDisplayDetailActivity);
 
         //Toolbar Settings
@@ -67,15 +68,14 @@ public class MeetingDetails extends AppCompatActivity {
         });
 
         //Retrieving intent
-        Meeting meeting = getIntent().getParcelableExtra("Meeting");
+        meeting = getIntent().getParcelableExtra("Meeting");
 
         //Retrieving data from intent
         meetingName = meeting.getMeetingName();
         String meetingRoom = meeting.getMeetingRoomName();
-        long meetingDate = meeting.getDate();
+        String meetingDate = meeting.getDate();
         String meetingTopic = meeting.getTopic();
-        long meetingStartTime = meeting.getStartingTime();
-        long meetingEndTime = meeting.getFinishingTime();
+        String meetingStartTime = meeting.getStartingTime();
         String meetingParticipants = meeting.getParticipatingCollaborators();
         int meetingDrawable = meeting.getMeetingRoomDrawable();
         String meetingUrl = meeting.getMeetingRoomUrl();
@@ -89,30 +89,9 @@ public class MeetingDetails extends AppCompatActivity {
         mTextViewMeetingName.setText(meetingName);
         mTextViewRoomName.setText(meetingRoom);
         mTextViewTopicDisplay.setText(meetingTopic);
-        //TODO = set meeting date
-        //TODO = set meeting starting time
-        //TODO = set meeting ending time
+        mTextViewDateDisplay.setText(meetingDate);
+        mTextViewStartingTime.setText(meetingStartTime);
         mTextViewParticipantsDisplay.setText(meetingParticipants);
-    }
 
-    void deleteMeeting() {
-        MaterialAlertDialogBuilder builder =  new MaterialAlertDialogBuilder(this);
-        builder.setMessage(R.string.delete_alert_dialog_message).setTitle(R.string.delete_alert_dialog_title);
-        builder.setCancelable(false)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                      //TODO fix delete method YES
-                    }
-                })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //TODO fix delete method NO
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
     }
-
 }

@@ -9,20 +9,19 @@ public class Meeting implements Parcelable {
     String mMeetingRoomName;
     int mMeetingRoomDrawable;
     String mMeetingRoomUrl;
-    long mDate;
-    long mStartingTime;
+    String mDate;
+    String mStartingTime;
     long mFinishingTime;
     String mTopic;
     String mParticipatingCollaborators;
 
-    public Meeting(String meetingName, String meetingRoomName, int meetingRoomDrawable, String meetingRoomUrl, long date, long startingTime, long finishingTime, String topic, String participatingCollaborators) {
+    public Meeting(String meetingName, String meetingRoomName, int meetingRoomDrawable, String meetingRoomUrl, String date, String startingTime, String topic, String participatingCollaborators) {
         mMeetingName = meetingName;
         mMeetingRoomName = meetingRoomName;
         mMeetingRoomDrawable = meetingRoomDrawable;
         mMeetingRoomUrl = meetingRoomUrl;
         mDate = date;
         mStartingTime = startingTime;
-        mFinishingTime = finishingTime;
         mTopic = topic;
         mParticipatingCollaborators = participatingCollaborators;
     }
@@ -31,8 +30,9 @@ public class Meeting implements Parcelable {
         mMeetingName = in.readString();
         mMeetingRoomName = in.readString();
         mMeetingRoomDrawable = in.readInt();
-        mDate = in.readLong();
-        mStartingTime = in.readLong();
+        mMeetingRoomUrl = in.readString();
+        mDate = in.readString();
+        mStartingTime = in.readString();
         mFinishingTime = in.readLong();
         mTopic = in.readString();
         mParticipatingCollaborators = in.readString();
@@ -58,19 +58,19 @@ public class Meeting implements Parcelable {
         mMeetingRoomName = meetingRoomName;
     }
 
-    public long getDate() {
+    public String getDate() {
         return mDate;
     }
 
-    public void setDate(long date) {
+    public void setDate(String date) {
         mDate = date;
     }
 
-    public long getStartingTime() {
+    public String getStartingTime() {
         return mStartingTime;
     }
 
-    public void setStartingTime(long startingTime) {
+    public void setStartingTime(String startingTime) {
         mStartingTime = startingTime;
     }
 
@@ -133,8 +133,8 @@ public class Meeting implements Parcelable {
         parcel.writeString(mMeetingRoomName);
         parcel.writeInt(mMeetingRoomDrawable);
         parcel.writeString(mMeetingRoomUrl);
-        parcel.writeLong(mDate);
-        parcel.writeLong(mStartingTime);
+        parcel.writeString(mDate);
+        parcel.writeString(mStartingTime);
         parcel.writeLong(mFinishingTime);
         parcel.writeString(mTopic);
         parcel.writeString(mParticipatingCollaborators);
