@@ -2,26 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/createMeetingActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".controller.MeetingCreation">
 
-    <ImageView
-        android:id="@+id/imageViewMeetingCreationActivity"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="@string/meeting_vector"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarMeetingCreation"
-        app:srcCompat="@drawable/meeting" />
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarMeetingCreation"
         style="@style/ToolbarStyle"
-        android:layout_width="0dp"
+        android:layout_width="411dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:backgroundTint="@color/steelBlue"
@@ -33,155 +23,173 @@
         app:title="Create a meeting"
         app:titleTextColor="@color/white" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButtonValidateMeetingCreation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/teal_700"
-        android:clickable="true"
-        android:contentDescription="@string/check_icon_to_confirm_meeting"
-        android:focusable="true"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+    <ImageView
+        android:id="@+id/imageViewMeetingCreation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineMeetingCreation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_action_check_meeting_creation" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMeetingCreation"
+        app:srcCompat="@drawable/meeting" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+        android:id="@+id/guidelineMeetingCreation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.3" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewMeetingSetup"
-        android:layout_width="395dp"
-        android:layout_height="496dp"
-        android:layout_marginStart="8dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textfieldMeetingNameMeetingCreation"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/cornFlowerBlue"
-        android:backgroundTint="@color/cornFlowerBlue"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:hint="@string/name_of_the_meeting"
+        app:layout_constraintBottom_toTopOf="@+id/textfieldMeetingTopicMCA"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline2">
+        app:layout_constraintTop_toTopOf="@+id/guidelineMeetingCreation"
+        app:startIconDrawable="@drawable/ic_action_meeting_name">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textfieldInputMeetingNameCreation"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/buttonSetDateMeetingCreationActivity"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textfieldMeetingTopicMCA"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:hint="@string/topic_of_the_meeting"
+        app:layout_constraintBottom_toTopOf="@+id/cardViewSpinnerMeetingCreation"
+        app:layout_constraintEnd_toEndOf="@+id/textfieldMeetingNameMeetingCreation"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textfieldMeetingNameMeetingCreation"
+        app:layout_constraintTop_toBottomOf="@+id/textfieldMeetingNameMeetingCreation"
+        app:startIconDrawable="@drawable/ic_action_meeting_name">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textfieldInputMeetingTopicCreation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/editiTaextMetingNameCreationActivity"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:hint="Enter meeting name"
-                        android:padding="4dp"
-                        android:background="@null"/>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewSpinnerMeetingCreation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSetDateMeetingCreation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textfieldMeetingTopicMCA">
 
-                    <Spinner
-                        android:id="@+id/spinnerMeetingRoomSelectionMeetingCreationActivity"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:backgroundTint="@color/darkSlateGray"
-                        android:padding="4dp" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <Button
-                android:id="@+id/buttonSetDateMeetingCreationActivity"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="27dp"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="@color/teal_700"
-                android:text="@string/set_date"
-                app:layout_constraintBottom_toTopOf="@+id/editTextTextMultiLineTopicMeetingCreation"
-                app:layout_constraintEnd_toStartOf="@+id/buttonSetImeMeetingCreationActivity"
-                app:layout_constraintStart_toStartOf="@+id/cardView"
-                app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-            <Button
-                android:id="@+id/buttonSetImeMeetingCreationActivity"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/teal_700"
-                android:text="@string/set_time"
-                app:layout_constraintBottom_toBottomOf="@+id/buttonSetDateMeetingCreationActivity"
-                app:layout_constraintEnd_toEndOf="@+id/cardView"
-                app:layout_constraintStart_toEndOf="@+id/buttonSetDateMeetingCreationActivity"
-                app:layout_constraintTop_toTopOf="@+id/buttonSetDateMeetingCreationActivity" />
-
-            <EditText
-                android:id="@+id/editTextTextMultiLineTopicMeetingCreation"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:autofillHints="Topic of the meeting"
-                android:background="@color/white"
-                android:ems="10"
-                android:gravity="start|top"
-                android:hint="Enter topic of the meeting"
-                android:inputType="textMultiLine"
-                android:labelFor="@+id/editTextTextMultiLineTopicMeetingCreation"
-                android:padding="4dp"
-                app:layout_constraintBottom_toTopOf="@+id/editTextParticipantsMeetingCreation"
-                app:layout_constraintEnd_toEndOf="@+id/buttonSetImeMeetingCreationActivity"
-                app:layout_constraintStart_toStartOf="@+id/buttonSetDateMeetingCreationActivity"
-                app:layout_constraintTop_toBottomOf="@+id/buttonSetDateMeetingCreationActivity"
-                tools:text="Meeting of today is to discuss the new direction our product development will take. " />
-
-            <EditText
-                android:id="@+id/editTextParticipantsMeetingCreation"
-                android:layout_width="0dp"
-                android:layout_height="185dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/whiteSmoke"
-                android:hint="Enter participants email, jane.doe@lamzone.com, john.doe@lamzone.com, ..."
-                app:layout_constraintBottom_toTopOf="@+id/buttonAddMeetingCreationActivity"
-                app:layout_constraintEnd_toEndOf="@+id/editTextTextMultiLineTopicMeetingCreation"
-                app:layout_constraintStart_toStartOf="@+id/editTextTextMultiLineTopicMeetingCreation"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLineTopicMeetingCreation"/>
-
-            <Button
-                android:id="@+id/buttonAddMeetingCreationActivity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/silverGreen"
-                android:text="@string/invite_collaborators"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/editTextParticipantsMeetingCreation"
-                app:layout_constraintStart_toStartOf="@+id/editTextParticipantsMeetingCreation"
-                app:layout_constraintTop_toBottomOf="@+id/editTextParticipantsMeetingCreation" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <Spinner
+            android:id="@+id/spinnerMeetingCreation"
+            style="@android:style/Widget.Material.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </androidx.cardview.widget.CardView>
 
+    <Button
+        android:id="@+id/buttonSetDateMeetingCreation"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/cornFlowerBlue"
+        android:text="@string/set_date"
+        app:icon="@drawable/ic_action_calendar"
+        app:layout_constraintBottom_toTopOf="@+id/buttonStartTimeMeetingCreation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewSpinnerMeetingCreation" />
+
+    <Button
+        android:id="@+id/buttonStartTimeMeetingCreation"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:text="@string/starts_at"
+        app:backgroundTint="@color/cornFlowerBlue"
+        app:layout_constraintEnd_toStartOf="@+id/buttonEndTimeMeetingCreation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSetDateMeetingCreation" />
+
+    <Button
+        android:id="@+id/buttonEndTimeMeetingCreation"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/ends_at"
+        app:backgroundTint="@color/cornFlowerBlue"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonStartTimeMeetingCreation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonStartTimeMeetingCreation" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewParticipantsDisplay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/darkSlateGray"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAddParticipantsMeetingCreation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonStartTimeMeetingCreation">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/materialTextViewParticipantsMeetingCreation"
+            style="@style/Widget.MaterialComponents.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/buttonAddParticipantsMeetingCreation"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/add_participants"
+        app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonValidationMeetingCreation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardViewParticipantsDisplay"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEndTimeMeetingCreation" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonValidationMeetingCreation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_action_check_meeting_creation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

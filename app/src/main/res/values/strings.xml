@@ -1,15 +1,16 @@
 <resources>
     <string name="app_name">Mareu</string>
     <string name="meeting_room">Meeting Room</string>
-    <string name="topic">Topic</string>
+    <string name="topic_of_the_meeting">Topic of the meeting</string>
     <string name="ends">Ends</string>
-    <string name="participants">Participants</string>
+    <string name="add_participants">Add participants</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="image_representing_meeting_room">Image representing meeting room</string>
     <string name="delete_with_trashcan_icon">Delete button with trashcan icon</string>
     <string name="date">Date</string>
     <string name="picture_of_the_meeting_room">Picture of the meeting room</string>
-    <string name="starts">Starts</string>
+    <string name="starts_at">Starts at</string>
+    <string name="ends_at">Ends at</string>
     <string name="delete">Delete</string>
     <string name="meeting_vector">Meeting Vector</string>
     <string name="set_date">Set date</string>
@@ -22,6 +23,13 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="meeting_informations">Meeting information\'s</string>
+    <string name="name_of_the_meeting">Name of the meeting</string>
+    <string name="topic">Topic</string>
+    <string name="starts">Starts</string>
+    <string name="participants">Participants</string>
+    <string name="reset_filters">Reset filters</string>
+    <string name="cancel">Cancel</string>
+    <string name="validate">Validate</string>
     <string-array name="meeting_room_spinner">
         <item>SELECT A MEETING ROOM</item>
         <item>PARIS</item>

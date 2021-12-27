@@ -1,6 +1,7 @@
 package com.alphaomardiallo.mareu.controller;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
@@ -9,7 +10,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -63,7 +64,8 @@ public class MainActivityTest {
      */
     @Test
     public void recyclerView_ShouldDeleteNeighbourWithSuccess() {
-
+        onView(allOf(withId(R.id.container), isDisplayed()))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(MEETING_TO_TEST, new DeleteMeeting()));
     }
 
     /**
@@ -75,5 +77,24 @@ public class MainActivityTest {
                 .perform(RecyclerViewActions.actionOnItemAtPosition(MEETING_TO_TEST, new OpenMeetingInformation()));
         onView(withId(R.id.meeting_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.textViewMeetingNameDetailActivity)).check(matches(withText(mService.getMeetings().get(MEETING_TO_TEST).getMeetingName())));
+    }
+
+    /**
+     * Test to check if meeting creation activity is opened when FAB clicked
+     */
+    @Test
+    public void FAB_OpensCreationActivity() {
+        onView(withId(R.id.floatingActionButtonCreateMeetingMainActivity)).perform(click());
+        onView(withId(R.id.createMeetingActivity)).check(matches(isDisplayed()));
+    }
+
+    /**
+     * Test to check if meeting creation activity is opened when FAB clicked and meeting is created
+     */
+    @Test
+    public void FAB_OpensCreationActivityAndMeetingIsCreated() {
+        onView(withId(R.id.floatingActionButtonCreateMeetingMainActivity)).perform(click());
+        onView(withId(R.id.createMeetingActivity)).check(matches(isDisplayed()));
+
     }
 }

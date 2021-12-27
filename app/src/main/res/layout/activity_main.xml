@@ -23,6 +23,26 @@
         app:title="@string/ma_reu"
         app:titleTextColor="@color/white">
 
+        <Button
+            android:id="@+id/buttonResetFilters"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/reset_filters"
+            android:textAppearance="?attr/textAppearanceButton"
+            android:textColor="@color/white"
+            app:elevation="0dp"
+            app:icon="@drawable/ic_action_delete_meeting_card"
+            app:iconGravity="start"
+            app:iconPadding="4dp"
+            app:iconTint="@color/white"
+            app:shapeAppearance="?attr/shapeAppearanceSmallComponent"
+            app:strokeColor="@color/white"
+            app:strokeWidth="2dp"
+            tools:layout_editor_absoluteX="265dp"
+            tools:layout_editor_absoluteY="2dp" />
+
         <ImageButton
             android:id="@+id/imageButtonFilterMainActivity"
             android:layout_width="wrap_content"
@@ -37,14 +57,17 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarMainActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMainActivity"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButtonCreateMeetingMainActivity"
@@ -52,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="70dp"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

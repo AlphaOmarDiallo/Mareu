@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alphaomardiallo.mareu.R;
 import com.alphaomardiallo.mareu.events.DeleteMeetingEvent;
 import com.alphaomardiallo.mareu.events.OpenMeetingEvent;
+import com.alphaomardiallo.mareu.events.SendPositionEvent;
 import com.alphaomardiallo.mareu.models.Meeting;
 import com.bumptech.glide.Glide;
 
@@ -47,17 +48,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(RecyclerViewAdapter.ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called.");
+
         Meeting meeting = mMeetings.get(position);
         Glide.with(holder.mHolderCircleImageView.getContext())
                 .load(meeting.getMeetingRoomUrl())
                 .into(holder.mHolderCircleImageView);
-        //holder.mHolderCircleImageView.setImageResource(meeting.getMeetingRoomDrawable());
         holder.mTextViewInfo.setText(meeting.getMeetingName()+ " - " + meeting.getStartingTime() + " - " + meeting.getMeetingRoomName());
         holder.mTextViewParticipants.setText(meeting.getParticipatingCollaborators());
 
         holder.mImageButtonDeleteMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int itemPosition = holder.getAdapterPosition();
+                EventBus.getDefault().post(new SendPositionEvent(itemPosition));
                 EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
                 Log.d(TAG, "onClick: was used to delete an item.");
 
@@ -78,11 +81,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mMeetings.size();
     }
 
-
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public FrameLayout mMeetingCard;
         public CircleImageView mHolderCircleImageView;
         public TextView mTextViewInfo;
         public TextView mTextViewParticipants;
@@ -90,7 +90,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            //mMeetingCard = (FrameLayout) itemView.findViewById(R.id.List_Item_Meeting);
             mHolderCircleImageView = itemView.findViewById(R.id.imageViewMeetingCard);
             mTextViewInfo = itemView.findViewById(R.id.textViewInfoMeetingCard);
             mTextViewParticipants = itemView.findViewById(R.id.textViewParticipantsMeetingCard);
