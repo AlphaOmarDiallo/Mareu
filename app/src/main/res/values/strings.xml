@@ -30,17 +30,31 @@
     <string name="reset_filters">Reset filters</string>
     <string name="cancel">Cancel</string>
     <string name="validate">Validate</string>
+    <string name="filter_meetings">Filter meetings by date, meeting room or both</string>
+    <string name="apply_filters">Apply filters</string>
     <string-array name="meeting_room_spinner">
         <item>SELECT A MEETING ROOM</item>
-        <item>PARIS</item>
+        <item>AMSTERDAM</item>
+        <item>BERLIN</item>
+        <item>BRUSSELS</item>
+        <item>BUCHAREST</item>
         <item>LONDON</item>
         <item>MADRID</item>
         <item>MILAN</item>
-        <item>BUCHAREST</item>
-        <item>VIENNA</item>
-        <item>BERLIN</item>
+        <item>PARIS</item>
         <item>PRAGUE</item>
+        <item>VIENNA</item>
+    </string-array>
+    <string-array name="meeting_room_spinner_filter_dialog">
         <item>AMSTERDAM</item>
+        <item>BERLIN</item>
         <item>BRUSSELS</item>
+        <item>BUCHAREST</item>
+        <item>LONDON</item>
+        <item>MADRID</item>
+        <item>MILAN</item>
+        <item>PARIS</item>
+        <item>PRAGUE</item>
+        <item>VIENNA</item>
     </string-array>
 </resources>

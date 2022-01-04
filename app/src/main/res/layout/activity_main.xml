@@ -16,6 +16,7 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toTopOf="@+id/container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,37 +24,65 @@
         app:title="@string/ma_reu"
         app:titleTextColor="@color/white">
 
-        <Button
-            android:id="@+id/buttonResetFilters"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/reset_filters"
-            android:textAppearance="?attr/textAppearanceButton"
-            android:textColor="@color/white"
-            app:elevation="0dp"
-            app:icon="@drawable/ic_action_delete_meeting_card"
-            app:iconGravity="start"
-            app:iconPadding="4dp"
-            app:iconTint="@color/white"
-            app:shapeAppearance="?attr/shapeAppearanceSmallComponent"
-            app:strokeColor="@color/white"
-            app:strokeWidth="2dp"
-            tools:layout_editor_absoluteX="265dp"
-            tools:layout_editor_absoluteY="2dp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp">
 
-        <ImageButton
-            android:id="@+id/imageButtonFilterMainActivity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_margin="4dp"
-            android:backgroundTint="#00FFFFFF"
-            android:minHeight="48dp"
-            app:srcCompat="@drawable/ic_action_filter_list"
-            tools:layout_editor_absoluteX="346dp"
-            tools:layout_editor_absoluteY="1dp" />
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/ma_reu"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/imageButtonFilterMainActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:backgroundTint="#00FFFFFF"
+                android:minHeight="48dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_action_filter_list" />
+
+            <Button
+                android:id="@+id/buttonApplyFilters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/rounded_corners"
+                android:backgroundTint="@color/green"
+                android:elevation="8dp"
+                android:text="@string/apply_filters"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageButtonFilterMainActivity"
+                app:layout_constraintEnd_toStartOf="@+id/imageButtonFilterMainActivity"
+                app:layout_constraintTop_toTopOf="@+id/imageButtonFilterMainActivity" />
+
+            <Button
+                android:id="@+id/buttonResetFilters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/rounded_corners"
+                android:backgroundTint="@color/crimson"
+                android:elevation="8dp"
+                android:text="@string/reset_filters"
+                android:textSize="12sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/buttonApplyFilters"
+                app:layout_constraintEnd_toStartOf="@+id/buttonApplyFilters" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -80,6 +109,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_action_add" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

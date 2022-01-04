@@ -1,27 +1,35 @@
 package com.alphaomardiallo.mareu.models;
 
-import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.RequiresApi;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoField;
+
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class Meeting implements Parcelable {
+
     String mMeetingName;
     String mMeetingRoomName;
-    int mMeetingRoomDrawable;
     String mMeetingRoomUrl;
-    String mDate;
-    String mStartingTime;
-    long mFinishingTime;
+    LocalDate mMeetingDate;
+    LocalTime mMeetingTime;
     String mTopic;
     String mParticipatingCollaborators;
 
-    public Meeting(String meetingName, String meetingRoomName, int meetingRoomDrawable, String meetingRoomUrl, String date, String startingTime, String topic, String participatingCollaborators) {
+    long mLongMeetingTime;
+    long mLongMeetingDAte;
+
+    public Meeting(String meetingName, String meetingRoomName, String meetingRoomUrl, LocalDate meetingDate, LocalTime meetingTime, String topic, String participatingCollaborators) {
         mMeetingName = meetingName;
         mMeetingRoomName = meetingRoomName;
-        mMeetingRoomDrawable = meetingRoomDrawable;
         mMeetingRoomUrl = meetingRoomUrl;
-        mDate = date;
-        mStartingTime = startingTime;
+        mMeetingDate = meetingDate;
+        mMeetingTime = meetingTime;
         mTopic = topic;
         mParticipatingCollaborators = participatingCollaborators;
     }
@@ -29,13 +37,23 @@ public class Meeting implements Parcelable {
     protected Meeting(Parcel in) {
         mMeetingName = in.readString();
         mMeetingRoomName = in.readString();
-        mMeetingRoomDrawable = in.readInt();
         mMeetingRoomUrl = in.readString();
-        mDate = in.readString();
-        mStartingTime = in.readString();
-        mFinishingTime = in.readLong();
         mTopic = in.readString();
         mParticipatingCollaborators = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mMeetingName);
+        dest.writeString(mMeetingRoomName);
+        dest.writeString(mMeetingRoomUrl);
+        dest.writeString(mTopic);
+        dest.writeString(mParticipatingCollaborators);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Meeting> CREATOR = new Creator<Meeting>() {
@@ -50,6 +68,14 @@ public class Meeting implements Parcelable {
         }
     };
 
+    public String getMeetingName() {
+        return mMeetingName;
+    }
+
+    public void setMeetingName(String meetingName) {
+        mMeetingName = meetingName;
+    }
+
     public String getMeetingRoomName() {
         return mMeetingRoomName;
     }
@@ -58,28 +84,28 @@ public class Meeting implements Parcelable {
         mMeetingRoomName = meetingRoomName;
     }
 
-    public String getDate() {
-        return mDate;
+    public String getMeetingRoomUrl() {
+        return mMeetingRoomUrl;
     }
 
-    public void setDate(String date) {
-        mDate = date;
+    public void setMeetingRoomUrl(String meetingRoomUrl) {
+        mMeetingRoomUrl = meetingRoomUrl;
     }
 
-    public String getStartingTime() {
-        return mStartingTime;
+    public LocalDate getMeetingDate() {
+        return mMeetingDate;
     }
 
-    public void setStartingTime(String startingTime) {
-        mStartingTime = startingTime;
+    public void setMeetingDate(LocalDate meetingDate) {
+        mMeetingDate = meetingDate;
     }
 
-    public long getFinishingTime() {
-        return mFinishingTime;
+    public LocalTime getMeetingTime() {
+        return mMeetingTime;
     }
 
-    public void setFinishingTime(long finishingTime) {
-        mFinishingTime = finishingTime;
+    public void setMeetingTime(LocalTime meetingTime) {
+        mMeetingTime = meetingTime;
     }
 
     public String getTopic() {
@@ -98,45 +124,4 @@ public class Meeting implements Parcelable {
         mParticipatingCollaborators = participatingCollaborators;
     }
 
-    public int getMeetingRoomDrawable() {
-        return mMeetingRoomDrawable;
-    }
-
-    public void setMeetingRoomDrawable(int meetingRoomDrawable) {
-        mMeetingRoomDrawable = meetingRoomDrawable;
-    }
-
-    public String getMeetingName() {
-        return mMeetingName;
-    }
-
-    public void setMeetingName(String meetingName) {
-        mMeetingName = meetingName;
-    }
-    public String getMeetingRoomUrl() {
-        return mMeetingRoomUrl;
-    }
-
-    public void setMeetingRoomUrl(String meetingRoomUrl) {
-        mMeetingRoomUrl = meetingRoomUrl;
-    }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mMeetingName);
-        parcel.writeString(mMeetingRoomName);
-        parcel.writeInt(mMeetingRoomDrawable);
-        parcel.writeString(mMeetingRoomUrl);
-        parcel.writeString(mDate);
-        parcel.writeString(mStartingTime);
-        parcel.writeLong(mFinishingTime);
-        parcel.writeString(mTopic);
-        parcel.writeString(mParticipatingCollaborators);
-    }
 }

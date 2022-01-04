@@ -1,5 +1,8 @@
 package com.alphaomardiallo.mareu.controller;
 
+import static com.alphaomardiallo.mareu.models.Collaborators.collaboratorsLength;
+import static com.alphaomardiallo.mareu.models.Collaborators.collaboratorsNumber;
+
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -41,6 +44,9 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -67,9 +73,9 @@ public class MeetingCreation extends AppCompatActivity {
     private String meetingRoomName;
     private int meetingRoomDrawable;
     private String meetingRoomUrl;
-    private String mDate;
-    private String startingTime;
-    private String endingTime;
+    private LocalDate mDate;
+    private LocalTime startingTime;
+    private LocalTime endingTime;
     private String topic;
     private String participatingCollaborators;
 
@@ -111,9 +117,9 @@ public class MeetingCreation extends AppCompatActivity {
         });
 
         //ChangeListener
-        mMeetingName.addTextChangedListener(validationTextwatcher);
-        mEditTextTopic.addTextChangedListener(validationTextwatcher);
-        mParticipants.addTextChangedListener(validationTextwatcher);
+        mMeetingName.addTextChangedListener(validationTextWatcher);
+        mEditTextTopic.addTextChangedListener(validationTextWatcher);
+        mParticipants.addTextChangedListener(validationTextWatcher);
 
         //Spinner settings
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.meeting_room_spinner, android.R.layout.simple_spinner_item);
@@ -150,13 +156,16 @@ public class MeetingCreation extends AppCompatActivity {
             }
         });
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 Log.d(TAG, "onDateSet: dd/MM/yyyy: " + day + "/" + month + "/" + year);
 
-                String date = month + "/" + day + "/" + year;
-                mButtonSetDate.setText(date);
+                LocalDate date = LocalDate.of(year, month, day);
+                mDate = date;
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                mButtonSetDate.setText(date.format(dateFormatter));
             }
         };
 
@@ -180,10 +189,15 @@ public class MeetingCreation extends AppCompatActivity {
             }
         });
         mTimeSetListenerStart = new TimePickerDialog.OnTimeSetListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
-                String time = hours + " : " + minutes;
-                mButtonSetStartTime.setText(time);
+                LocalTime time = LocalTime.of(hours, minutes);
+                startingTime = time;
+                endingTime = time.plusMinutes(45);
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+                mButtonSetStartTime.setText(time.format(timeFormatter));
+                mButtonSetEndTime.setText(endingTime.format(timeFormatter));
             }
         };
 
@@ -203,22 +217,25 @@ public class MeetingCreation extends AppCompatActivity {
                         DateFormat.is24HourFormat(MeetingCreation.this));
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
-                timeSet = true;
             }
         });
         mTimeSetListenerEnd = new TimePickerDialog.OnTimeSetListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
-                String time = hours + " : " + minutes;
-                mButtonSetEndTime.setText(time);
+                LocalTime time = LocalTime.of(hours, minutes);
+                endingTime = time;
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+                mButtonSetEndTime.setText(time.format(timeFormatter));
             }
         };
 
         mMeetingValidation.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 if (timeSet == true && dateSet == true & roomSet == true && textSet == true) {
-                    createNewMeeting(mMeetingName.getText().toString(), mSpinnerSelectMeetingRoom.getSelectedItem().toString(), mButtonSetDate.getText().toString(), mButtonSetStartTime.getText().toString(), mEditTextTopic.getText().toString(), mParticipants.getText().toString());
+                    createNewMeeting(mMeetingName.getText().toString(), mSpinnerSelectMeetingRoom.getSelectedItem().toString(), mDate, startingTime, mEditTextTopic.getText().toString(), mParticipants.getText().toString());
                     Toast.makeText(MeetingCreation.this, "Meeting created", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(MeetingCreation.this, "Fill all fields", Toast.LENGTH_SHORT).show();
@@ -231,7 +248,7 @@ public class MeetingCreation extends AppCompatActivity {
         mButtonAddParticipants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String[] listCollaborators = new String[]{Collaborators.JOHNDOE.getEmail(), Collaborators.JANEDOE.getEmail(), Collaborators.ALPHADIALLO.getEmail()};
+                String[] listCollaborators = {Collaborators.JOHNDOE.getEmail(), Collaborators.JANEDOE.getEmail(), Collaborators.ALPHADIALLO.getEmail(), Collaborators.COLINDAGBA.getEmail(), Collaborators.SAKINAKARCHAOUI.getEmail(), Collaborators.THIAGOSILVA.getEmail(), Collaborators.MARIEANTOINETTEKATOTO.getEmail(), Collaborators.GRACEGEYORO.getEmail(), Collaborators.JORDYNHUITEMA.getEmail(), Collaborators.AMINATADIALLO.getEmail(), Collaborators.MARCOVERRATTI.getEmail(), Collaborators.KYLLIANMBAPPE.getEmail()};
                 final boolean[] checkedItems = new boolean[listCollaborators.length];
                 final List<String> selectedItems = Arrays.asList(listCollaborators);
 
@@ -289,8 +306,9 @@ public class MeetingCreation extends AppCompatActivity {
         Glide.with(mImageView).load(urlImage).circleCrop().placeholder(R.drawable.meeting).into(mImageView);
     }
 
-    private void createNewMeeting (String meetingName, String meetingRoomName, String mDate,
-                                String startingTime, String topic, String participatingCollaborators) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createNewMeeting (String meetingName, String meetingRoomName, LocalDate mDate,
+                                   LocalTime startingTime, String topic, String participatingCollaborators) {
         this.meetingName = meetingName;
         this.meetingRoomName = meetingRoomName;
         this.mDate = mDate;
@@ -335,16 +353,15 @@ public class MeetingCreation extends AppCompatActivity {
                 meetingRoom = null;
         }
 
-        this.meetingRoomDrawable = meetingRoom.getDrawable();
         this.meetingRoomUrl = meetingRoom.getUrl();
         this.meetingRoomName = meetingRoom.getCity();
-        Meeting newMeeting = new Meeting(this.meetingName, this.meetingRoomName, this.meetingRoomDrawable, this.meetingRoomUrl, this.mDate, this.startingTime, this.topic, this.participatingCollaborators);
+        Meeting newMeeting = new Meeting(this.meetingName, this.meetingRoomName, this.meetingRoomUrl, this.mDate, this.startingTime, this.topic, this.participatingCollaborators);
         meetings.add(newMeeting);
         mMeetingValidation.setVisibility(mMeetingValidation.GONE);
         modifyImageView(meetingRoomUrl);
     }
 
-    private TextWatcher validationTextwatcher = new TextWatcher() {
+    private TextWatcher validationTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 

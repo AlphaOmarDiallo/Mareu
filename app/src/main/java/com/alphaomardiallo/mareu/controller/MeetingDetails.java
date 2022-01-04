@@ -1,23 +1,25 @@
 package com.alphaomardiallo.mareu.controller;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import static android.content.ContentValues.TAG;
 
-import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.widget.*;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.alphaomardiallo.mareu.R;
 import com.alphaomardiallo.mareu.di.DI;
 import com.alphaomardiallo.mareu.models.Meeting;
+import com.alphaomardiallo.mareu.models.MeetingRooms;
 import com.alphaomardiallo.mareu.service.MeetingApiService;
 import com.bumptech.glide.Glide;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -27,19 +29,17 @@ public class MeetingDetails extends AppCompatActivity {
     private ImageView mImageView;
     private TextView mTextViewMeetingName;
     private TextView mTextViewRoomName;
-    private FloatingActionButton mFloatingActionButtonDeleteMeeting;
     private TextView mTextViewDateDisplay;
     private TextView mTextViewTopicDisplay;
     private TextView mTextViewStartingTime;
-    private TextView mTextViewEndingTime;
     private TextView mTextViewParticipantsDisplay;
 
     private Meeting meeting;
     private String meetingName;
-    private int meetingID;
 
     private MeetingApiService mApiService = DI.getMeetingsApiService();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,23 +67,21 @@ public class MeetingDetails extends AppCompatActivity {
             }
         });
 
-        //Retrieving intent
-        meeting = getIntent().getParcelableExtra("Meeting");
-
         //Retrieving data from intent
+        Bundle extras = getIntent().getExtras();
+        meeting = extras.getParcelable("Meeting");
         meetingName = meeting.getMeetingName();
         String meetingRoom = meeting.getMeetingRoomName();
-        String meetingDate = meeting.getDate();
+        String meetingDate = extras.getString("MeetingDate");
         String meetingTopic = meeting.getTopic();
-        String meetingStartTime = meeting.getStartingTime();
+        String meetingStartTime = extras.getString("MeetingTime");
         String meetingParticipants = meeting.getParticipatingCollaborators();
-        int meetingDrawable = meeting.getMeetingRoomDrawable();
-        String meetingUrl = meeting.getMeetingRoomUrl();
+        String meetingUrl = meeting.getMeetingRoomUrl(); 
 
         //Setting the data
         Glide.with(this)
                 .load(meetingUrl)
-                .placeholder(meeting.getMeetingRoomDrawable())
+                .placeholder(getPlaceholderDrawable(meeting))
                 .into(mImageView);
 
         mTextViewMeetingName.setText(meetingName);
@@ -92,6 +90,45 @@ public class MeetingDetails extends AppCompatActivity {
         mTextViewDateDisplay.setText(meetingDate);
         mTextViewStartingTime.setText(meetingStartTime);
         mTextViewParticipantsDisplay.setText(meetingParticipants);
-
     }
-}
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public int getPlaceholderDrawable(Meeting meeting) {
+        int drawable;
+        switch (meeting.getMeetingRoomName()) {
+            case "AMSTERDAM":
+                drawable = MeetingRooms.AMSTERDAM.getDrawable();
+                break;
+            case "BERLIN":
+                drawable = MeetingRooms.BERLIN.getDrawable();
+                break;
+            case "BRUSSELS":
+                drawable = MeetingRooms.BRUSSELS.getDrawable();
+                break;
+            case "BUCHAREST":
+                drawable = MeetingRooms.BUCHAREST.getDrawable();
+                break;
+            case "MADRID":
+                drawable = MeetingRooms.MADRID.getDrawable();
+                break;
+            case "LONDON":
+                drawable = MeetingRooms.LONDON.getDrawable();
+                break;
+            case "MILAN":
+                drawable = MeetingRooms.MILAN.getDrawable();
+                break;
+            case "PARIS":
+                drawable = MeetingRooms.PARIS.getDrawable();
+                break;
+            case "PRAGUE":
+                drawable = MeetingRooms.PRAGUE.getDrawable();
+                break;
+            case "VIENNA":
+                drawable = MeetingRooms.VIENNA.getDrawable();
+                break;
+            default:
+                drawable = 0;
+        }
+        return drawable;
+    }
+};

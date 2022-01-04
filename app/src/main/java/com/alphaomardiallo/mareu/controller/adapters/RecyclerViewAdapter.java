@@ -53,7 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Glide.with(holder.mHolderCircleImageView.getContext())
                 .load(meeting.getMeetingRoomUrl())
                 .into(holder.mHolderCircleImageView);
-        holder.mTextViewInfo.setText(meeting.getMeetingName()+ " - " + meeting.getStartingTime() + " - " + meeting.getMeetingRoomName());
+        holder.mTextViewInfo.setText(meeting.getMeetingName()+ " - " + meeting.getMeetingTime() + " - " + meeting.getMeetingRoomName());
         holder.mTextViewParticipants.setText(meeting.getParticipatingCollaborators());
 
         holder.mImageButtonDeleteMeeting.setOnClickListener(new View.OnClickListener() {
