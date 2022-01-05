@@ -55,7 +55,7 @@ public class MainActivityTest {
      */
     @Test
     public void recyclerView_ShouldNotBeEmpty() {
-        onView(allOf(withId(R.id.container), isCompletelyDisplayed()))
+        onView(allOf(withId(R.id.recyclerViewMainActivity), isCompletelyDisplayed()))
                 .check(matches(hasMinimumChildCount(1)));
     }
 
@@ -64,7 +64,7 @@ public class MainActivityTest {
      */
     @Test
     public void recyclerView_ShouldDeleteNeighbourWithSuccess() {
-        onView(allOf(withId(R.id.container), isDisplayed()))
+        onView(allOf(withId(R.id.recyclerViewMainActivity), isDisplayed()))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(MEETING_TO_TEST, new DeleteMeeting()));
     }
 
@@ -73,7 +73,7 @@ public class MainActivityTest {
      */
     @Test
     public void recyclerView_ShouldOpenMeetingDetail_WithCorrectData() {
-        onView(allOf(withId(R.id.container), isDisplayed()))
+        onView(allOf(withId(R.id.recyclerViewMainActivity), isDisplayed()))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(MEETING_TO_TEST, new OpenMeetingInformation()));
         onView(withId(R.id.meeting_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.textViewMeetingNameDetailActivity)).check(matches(withText(mService.getMeetings().get(MEETING_TO_TEST).getMeetingName())));
@@ -84,7 +84,7 @@ public class MainActivityTest {
      */
     @Test
     public void FAB_OpensCreationActivity() {
-        onView(withId(R.id.floatingActionButtonCreateMeetingMainActivity)).perform(click());
+        onView(withId(R.id.FABCreateMeetingMainActivity)).perform(click());
         onView(withId(R.id.createMeetingActivity)).check(matches(isDisplayed()));
     }
 
@@ -93,7 +93,7 @@ public class MainActivityTest {
      */
     @Test
     public void FAB_OpensCreationActivityAndMeetingIsCreated() {
-        onView(withId(R.id.floatingActionButtonCreateMeetingMainActivity)).perform(click());
+        onView(withId(R.id.FABCreateMeetingMainActivity)).perform(click());
         onView(withId(R.id.createMeetingActivity)).check(matches(isDisplayed()));
 
     }

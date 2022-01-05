@@ -16,7 +16,7 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toTopOf="@+id/container"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewMainActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +56,7 @@
                 app:srcCompat="@drawable/ic_action_filter_list" />
 
             <Button
-                android:id="@+id/buttonApplyFilters"
+                android:id="@+id/buttonApplyFiltersMainActivity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -70,7 +70,7 @@
                 app:layout_constraintTop_toTopOf="@+id/imageButtonFilterMainActivity" />
 
             <Button
-                android:id="@+id/buttonResetFilters"
+                android:id="@+id/buttonResetFiltersMainActivity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -79,8 +79,8 @@
                 android:elevation="8dp"
                 android:text="@string/reset_filters"
                 android:textSize="12sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/buttonApplyFilters"
-                app:layout_constraintEnd_toStartOf="@+id/buttonApplyFilters" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/buttonApplyFiltersMainActivity"
+                app:layout_constraintEnd_toStartOf="@+id/buttonApplyFiltersMainActivity" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -88,7 +88,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/container"
+        android:id="@+id/recyclerViewMainActivity"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -99,7 +99,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButtonCreateMeetingMainActivity"
+        android:id="@+id/FABCreateMeetingMainActivity"
         style="@style/FloatingActionButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

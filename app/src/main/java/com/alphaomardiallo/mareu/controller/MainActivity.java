@@ -1,12 +1,11 @@
 package com.alphaomardiallo.mareu.controller;
 
-import android.annotation.SuppressLint;
-import android.content.DialogInterface;
+import static androidx.recyclerview.widget.RecyclerView.*;
+
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,18 +17,18 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alphaomardiallo.mareu.R;
+import com.alphaomardiallo.mareu.controller.adapters.RecyclerViewAdapter;
 import com.alphaomardiallo.mareu.di.DI;
 import com.alphaomardiallo.mareu.events.DeleteMeetingEvent;
 import com.alphaomardiallo.mareu.events.OpenMeetingEvent;
 import com.alphaomardiallo.mareu.events.SendPositionEvent;
 import com.alphaomardiallo.mareu.models.Meeting;
-import com.alphaomardiallo.mareu.models.MeetingRooms;
 import com.alphaomardiallo.mareu.service.MeetingApiService;
-import com.alphaomardiallo.mareu.controller.adapters.RecyclerViewAdapter;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -50,22 +49,18 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
     private static final String MEETINGDATE = "MeetingDate";
     private static final String MEETINGTIME = "MeetingTime";
 
-    private Toolbar mToolbar;
-    private ImageButton mFilterButton;
-    private FloatingActionButton mFABCreateMeeting;
-    private MeetingApiService mApiService;
-    private Button mButtonApplyFilters;
-    private Button mButtonResetFilters;
+    private MeetingApiService apiService;
+    private Button buttonApplyFilters;
+    private Button buttonResetFilters;
 
-    private List<Meeting> mMeetings = new ArrayList<>();
-    private List<Meeting> mDisplayedMeetings = new ArrayList<>();
-    private List<Meeting> mFilteredMeetings = new ArrayList<>();
+    private List<Meeting> listMeetings = new ArrayList<>();
+    private List<Meeting> listDisplayedMeetings = new ArrayList<>();
 
     private RecyclerViewAdapter adapter;
     private int itemPosition;
 
-    private LocalDate filterDialogDate = null;
-    private String filterDialogRoom = null;
+    private LocalDate filterDialogDateSelected = null;
+    private String filterDialogRoomSelected = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,81 +68,67 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
         setContentView(R.layout.activity_main);
 
         // Views
-        mToolbar = findViewById(R.id.toolbarMainActivity);
-        mFilterButton = findViewById(R.id.imageButtonFilterMainActivity);
-        mFABCreateMeeting = findViewById(R.id.floatingActionButtonCreateMeetingMainActivity);
-        mFilterButton = findViewById(R.id.imageButtonFilterMainActivity);
-        mButtonApplyFilters = findViewById(R.id.buttonApplyFilters);
-        mButtonResetFilters = findViewById(R.id.buttonResetFilters);
+        Toolbar toolbar = findViewById(R.id.toolbarMainActivity);
+        ImageButton filterButton = findViewById(R.id.imageButtonFilterMainActivity);
+        FloatingActionButton FABCreateMeeting = findViewById(R.id.FABCreateMeetingMainActivity);
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewMainActivity);
+        buttonApplyFilters = findViewById(R.id.buttonApplyFiltersMainActivity);
+        buttonResetFilters = findViewById(R.id.buttonResetFiltersMainActivity);
 
         // Toolbar settings
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
+
+        // RecyclerView settings
+        ItemAnimator animator = new DefaultItemAnimator();
+        recyclerView.setItemAnimator(animator);
 
         // DI
-        mApiService = DI.getMeetingsApiService();
-        mMeetings = mApiService.getMeetings();
-        mDisplayedMeetings = mMeetings;
-        initRecyclerView();
+        apiService = DI.getMeetingsApiService();
+        listMeetings = apiService.getMeetings();
+        listDisplayedMeetings = listMeetings;
+        initializeRecyclerView();
 
         // Meeting creation button
-        mFABCreateMeeting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), MeetingCreation.class);
-                startActivity(intent);
-            }
+        FABCreateMeeting.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(), MeetingCreation.class);
+            startActivity(intent);
         });
 
         //Filter button settings
         setButtonResetApplyFiltersInvisible();
-        mFilterButton.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceAsColor")
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View view) {
-                openFilterDialog();
-                mButtonApplyFilters.setVisibility(mButtonApplyFilters.VISIBLE);
-            }
+        filterButton.setOnClickListener(view -> {
+            openFilterDialog();
+            buttonApplyFilters.setVisibility(View.VISIBLE);
         });
 
         //Apply filter button settings
-        mButtonApplyFilters.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                filterList();
-                initRecyclerView();
-                mButtonResetFilters.setVisibility(mButtonResetFilters.VISIBLE);
-            }
+        buttonApplyFilters.setOnClickListener(view -> {
+            filterList();
+            buttonResetFilters.setVisibility(View.VISIBLE);
         });
 
         //Apply filter button settings
-        mButtonResetFilters.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDisplayedMeetings = mApiService.getMeetings();
-                initRecyclerView();
-                setButtonResetApplyFiltersInvisible();
-            }
+        buttonResetFilters.setOnClickListener(view -> {
+            listDisplayedMeetings = apiService.getMeetings();
+            initializeRecyclerView();
+            setButtonResetApplyFiltersInvisible();
         });
 
-        if (savedInstanceState != null){
-            List <Meeting> list = savedInstanceState.getParcelableArrayList("mDisplayMeetings");
+        if (savedInstanceState != null) {
+            List<Meeting> list = savedInstanceState.getParcelableArrayList("mDisplayMeetings");
             String room = savedInstanceState.getString("filterRoomDialog");
             String date = savedInstanceState.getString("filterDialogDate");
-            Boolean values = savedInstanceState.getBoolean("values");
-            if (values == true) {
-                if (room != null){
-                    filterDialogRoom = room;
-                }
-                if (date != null) {
-                    DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
-                    filterDialogDate = LocalDate.parse(String.format(date, dateFormatter));
-                }
-                mDisplayedMeetings = list;
-                mButtonResetFilters.setVisibility(mButtonResetFilters.VISIBLE);
-                mButtonApplyFilters.setVisibility(mButtonApplyFilters.VISIBLE);
+            if (room != null) {
+                filterDialogRoomSelected = room;
             }
-            initRecyclerView();
+            if (date != null) {
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
+                filterDialogDateSelected = LocalDate.parse(String.format(date, dateFormatter));
+            }
+            listDisplayedMeetings = list;
+            buttonResetFilters.setVisibility(View.VISIBLE);
+            buttonApplyFilters.setVisibility(View.VISIBLE);
+            initializeRecyclerView();
         }
     }
 
@@ -156,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
     @Subscribe
     public void onOpenMeetingEvent(OpenMeetingEvent event) {
         Meeting meeting = event.meeting;
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String meetingDate = dateFormatter.format(event.meeting.getMeetingDate());
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         String meetingTime = timeFormatter.format(event.meeting.getMeetingTime());
@@ -169,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
         Intent intent = new Intent(this, MeetingDetails.class);
         intent.putExtras(extras);
 
-        Log.d(TAG, "onOpenMeetingEvent: opening with intent");
         startActivity(intent);
     }
 
@@ -184,30 +164,22 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
         builder.setMessage(R.string.delete_alert_dialog_message).setTitle(R.string.delete_alert_dialog_title);
         builder.setCancelable(false)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        try {
-                            mMeetings.remove(meeting);
-                            //adapter.notifyDataSetChanged();
-                            adapter.notifyItemRemoved(itemPosition);
-                            Log.d(TAG, "onClick: item removed position " + itemPosition);
-                            Toast.makeText(MainActivity.this, "Meeting deleted", Toast.LENGTH_SHORT);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
+                    try {
+                        listMeetings.remove(meeting);
+                        adapter.notifyItemRemoved(itemPosition);
+                        filterList();
+                        Toast.makeText(MainActivity.this, "Meeting deleted", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
+                .setNegativeButton(R.string.no, (dialogInterface, i) -> dialogInterface.cancel());
         AlertDialog alert = builder.create();
         alert.show();
     }
-    //Application state ===================================================================
+
+    //Application lifecycle state ===================================================================
     @Override
     protected void onStart() {
         super.onStart();
@@ -217,24 +189,21 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
     @Override
     protected void onResume() {
         super.onResume();
-        initRecyclerView();
+        initializeRecyclerView();
         Log.d(TAG, "onResume: called");
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        Boolean values = false;
-        outState.putParcelableArrayList("mDisplayMeetings", (ArrayList<? extends Parcelable>) mDisplayedMeetings);
-        if (filterDialogRoom != null) {
-            outState.putString("filterDialogRoom", filterDialogRoom);
-            values = true;
-        } else if (filterDialogDate != null) {
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
-            outState.putString("filterDialogDate", filterDialogDate.format(dateFormatter));
-            values = true;
+        outState.putParcelableArrayList("mDisplayMeetings", (ArrayList<? extends Parcelable>) listDisplayedMeetings);
+        if (filterDialogRoomSelected != null) {
+            outState.putString("filterDialogRoom", filterDialogRoomSelected);
         }
-        outState.putBoolean("values", values);
+        if (filterDialogDateSelected != null) {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
+            outState.putString("filterDialogDate", filterDialogDateSelected.format(dateFormatter));
+        }
     }
 
     @Override
@@ -244,18 +213,16 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
     }
 
     // Methods ===================================================================================
-    // Initialize RecyclerView
-    private void initRecyclerView() {
-        Log.d(TAG, "onCreate: initRecyclerViewCalled");
-        RecyclerView recyclerView = findViewById(R.id.container);
-        adapter = new RecyclerViewAdapter(this, mDisplayedMeetings);
+    private void initializeRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewMainActivity);
+        adapter = new RecyclerViewAdapter(this, listDisplayedMeetings);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     public void setButtonResetApplyFiltersInvisible() {
-        mButtonResetFilters.setVisibility(mButtonResetFilters.GONE);
-        mButtonApplyFilters.setVisibility(mButtonApplyFilters.GONE);
+        buttonResetFilters.setVisibility(View.GONE);
+        buttonApplyFilters.setVisibility(View.GONE);
     }
 
     public void openFilterDialog() {
@@ -265,70 +232,26 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
 
     @Override
     public void applyTexts(LocalDate date, String room) {
-        filterDialogDate = date;
-        filterDialogRoom = room;
-        Log.d(TAG, "applyTexts: " + date);
-        Log.d(TAG, "applyTexts: " + room);
+        filterDialogDateSelected = date;
+        filterDialogRoomSelected = room;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void filterList() {
-        if (filterDialogDate != null){
-            Log.d(TAG, "filterList: date " + filterDialogDate.toEpochDay());
-            mFilteredMeetings = mMeetings.stream()
-                    .filter(meeting -> meeting.getMeetingDate().toEpochDay() == filterDialogDate.toEpochDay())
+        List<Meeting> listFilteredMeetings;
+        if (filterDialogDateSelected != null) {
+            listFilteredMeetings = listMeetings.stream()
+                    .filter(meeting -> meeting.getMeetingDate().toEpochDay() == filterDialogDateSelected.toEpochDay())
                     .collect(Collectors.toList());
-            Log.d(TAG, "filterList: Filtered list by date " + mFilteredMeetings);
-            mDisplayedMeetings = mFilteredMeetings;
-            initRecyclerView();
-        } else if (filterDialogRoom != null) {
-            Log.d(TAG, "filterList: room " + filterDialogRoom);
-            mFilteredMeetings = mMeetings.stream()
-                    .filter(meeting -> meeting.getMeetingRoomName().equalsIgnoreCase(filterDialogRoom))
+            listDisplayedMeetings = listFilteredMeetings;
+            initializeRecyclerView();
+        } else if (filterDialogRoomSelected != null) {
+            listFilteredMeetings = listMeetings.stream()
+                    .filter(meeting -> meeting.getMeetingRoomName().equalsIgnoreCase(filterDialogRoomSelected))
                     .collect(Collectors.toList());
-            Log.d(TAG, "filterList: Filtered list by room " + mFilteredMeetings);
-            mDisplayedMeetings = mFilteredMeetings;
-            initRecyclerView();
+            listDisplayedMeetings = listFilteredMeetings;
+            initializeRecyclerView();
         }
-        Log.d(TAG, "filterList: result " + mFilteredMeetings.toString());
-    }
-
-    public String meetingRoom(String room) {
-        switch (room) {
-            case "AMSTERDAM":
-                room = MeetingRooms.AMSTERDAM.getCity();
-                break;
-            case "BERLIN":
-                room = MeetingRooms.BERLIN.getCity();
-                break;
-            case "BRUSSELS":
-                room = MeetingRooms.BRUSSELS.getCity();
-                break;
-            case "BUCHAREST":
-                room = MeetingRooms.BUCHAREST.getCity();
-                break;
-            case "MADRID":
-                room = MeetingRooms.MADRID.getCity();
-                break;
-            case "LONDON":
-                room = MeetingRooms.LONDON.getCity();
-                break;
-            case "MILAN":
-                room = MeetingRooms.MILAN.getCity();
-                break;
-            case "PARIS":
-                room = MeetingRooms.PARIS.getCity();
-                break;
-            case "PRAGUE":
-                room = MeetingRooms.PRAGUE.getCity();
-                break;
-            case "VIENNA":
-                room = MeetingRooms.VIENNA.getCity();
-                break;
-            default:
-                room = null;
-        }
-        return room;
     }
 }
 
