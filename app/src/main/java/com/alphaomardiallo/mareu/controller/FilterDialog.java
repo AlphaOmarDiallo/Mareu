@@ -25,11 +25,11 @@ import java.util.Calendar;
 
 public class FilterDialog extends AppCompatDialogFragment {
 
-    private DatePicker mDatePicker;
-    private Spinner mSpinner;
+    private DatePicker datePicker;
+    private Spinner spinner;
     private FilterDialogListener listener;
-    private RadioButton mRadioButtonDate;
-    private RadioButton mRadioButtonMeetingRoom;
+    private RadioButton radioButtonDate;
+    private RadioButton radioButtonMeetingRoom;
 
 
     @NonNull
@@ -38,7 +38,7 @@ public class FilterDialog extends AppCompatDialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_dialog_filter, null);
 
         builder.setView(view)
@@ -49,29 +49,29 @@ public class FilterDialog extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         LocalDate date;
                         String room;
-                        if (mRadioButtonDate.isChecked()){
-                            date = getDateFromDatePicker(mDatePicker);
+                        if (radioButtonDate.isChecked()) {
+                            date = getDateFromDatePicker(datePicker);
                         } else {
                             date = null;
                         }
-                        if (mRadioButtonMeetingRoom.isChecked()){
-                            room = mSpinner.getSelectedItem().toString();
+                        if (radioButtonMeetingRoom.isChecked()) {
+                            room = spinner.getSelectedItem().toString();
                         } else {
                             room = null;
                         }
                         listener.applyTexts(date, room);
                     }
                 });
-        mDatePicker = view.findViewById(R.id.datePickerFilterDialog);
-        mSpinner = view.findViewById(R.id.spinnerFilterDialog);
-        mRadioButtonDate = view.findViewById(R.id.radioButtonDate);
-        mRadioButtonMeetingRoom = view.findViewById(R.id.radioButtonMeetingRoom);
+        datePicker = view.findViewById(R.id.datePickerFilterDialog);
+        spinner = view.findViewById(R.id.spinnerFilterDialog);
+        radioButtonDate = view.findViewById(R.id.radioButtonDate);
+        radioButtonMeetingRoom = view.findViewById(R.id.radioButtonMeetingRoom);
 
-        mRadioButtonDate.setChecked(true);
+        radioButtonDate.setChecked(true);
 
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getContext(), R.array.meeting_room_spinner_filter_dialog, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(spinnerAdapter);
+        spinner.setAdapter(spinnerAdapter);
 
         return builder.create();
     }
@@ -88,10 +88,10 @@ public class FilterDialog extends AppCompatDialogFragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static LocalDate getDateFromDatePicker(DatePicker datePicker){
+    public static LocalDate getDateFromDatePicker(DatePicker datePicker) {
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth() + 1;
-        int year =  datePicker.getYear();
+        int year = datePicker.getYear();
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(day, month, year);

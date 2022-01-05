@@ -7,7 +7,7 @@ import com.alphaomardiallo.mareu.models.Meeting;
  */
 public class OpenMeetingEvent {
 
-     /**
+    /**
      * Meeting to open
      */
     public Meeting meeting;

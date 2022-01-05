@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -45,6 +44,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class MeetingCreation extends AppCompatActivity {
     private static final String TAG = "MeetingCreation";
 
@@ -73,7 +73,7 @@ public class MeetingCreation extends AppCompatActivity {
     private Boolean dateSet = false;
     private Boolean timeSet = false;
 
-    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
+    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n", "NewApi"})
     @RequiresApi(api = Build.VERSION_CODES.N)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,8 +136,6 @@ public class MeetingCreation extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                Log.d(TAG, "onDateSet: dd/MM/yyyy: " + day + "/" + month + "/" + year);
-
                 LocalDate date = LocalDate.of(year, month, day);
                 meetingDate = date;
                 DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
