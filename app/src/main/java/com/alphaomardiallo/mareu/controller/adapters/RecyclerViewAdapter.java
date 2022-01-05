@@ -50,8 +50,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(RecyclerViewAdapter.ViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder: called.");
-
         Meeting meeting = meetings.get(position);
         Glide.with(holder.mHolderCircleImageView.getContext())
                 .load(meeting.getMeetingRoomUrl())

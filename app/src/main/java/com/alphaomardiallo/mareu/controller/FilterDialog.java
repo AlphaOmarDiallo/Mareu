@@ -79,7 +79,6 @@ public class FilterDialog extends AppCompatDialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
         try {
             listener = (FilterDialogListener) context;
         } catch (ClassCastException e) {
