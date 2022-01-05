@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
     private static final String TAG = "Main Activity";
     public static final String MEETING = "Meeting";
     private static final String MEETINGDATE = "MeetingDate";
-    private static final String MEETINGTIME = "MeetingTime";
+    private static final String MEETINGTIMESTART = "MeetingStart";
+    private static final String MEETINGTIMEEND = "MeetingEnd";
 
     private MeetingApiService apiService;
     private Button buttonApplyFilters;
@@ -140,12 +141,14 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String meetingDate = dateFormatter.format(event.meeting.getMeetingDate());
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-        String meetingTime = timeFormatter.format(event.meeting.getMeetingTime());
+        String meetingTimeStart = timeFormatter.format(event.meeting.getMeetingStart());
+        String meetingTimeEnd = timeFormatter.format(event.meeting.getMeetingEnd());
 
         Bundle extras = new Bundle();
         extras.putParcelable(MEETING, meeting);
         extras.putString(MEETINGDATE, meetingDate);
-        extras.putString(MEETINGTIME, meetingTime);
+        extras.putString(MEETINGTIMESTART, meetingTimeStart);
+        extras.putString(MEETINGTIMEEND, meetingTimeEnd);
 
         Intent intent = new Intent(this, MeetingDetails.class);
         intent.putExtras(extras);

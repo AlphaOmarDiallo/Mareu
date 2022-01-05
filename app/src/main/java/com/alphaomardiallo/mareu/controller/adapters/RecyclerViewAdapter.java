@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -53,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Glide.with(holder.mHolderCircleImageView.getContext())
                 .load(meeting.getMeetingRoomUrl())
                 .into(holder.mHolderCircleImageView);
-        holder.mTextViewInfo.setText(meeting.getMeetingName()+ " - " + meeting.getMeetingTime() + " - " + meeting.getMeetingRoomName());
+        holder.mTextViewInfo.setText(meeting.getMeetingName()+ " - " + meeting.getMeetingStart() + " - " + meeting.getMeetingRoomName());
         holder.mTextViewParticipants.setText(meeting.getParticipatingCollaborators());
 
         holder.mImageButtonDeleteMeeting.setOnClickListener(new View.OnClickListener() {

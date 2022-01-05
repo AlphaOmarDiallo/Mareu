@@ -17,16 +17,16 @@ import java.util.List;
 public abstract class DummyMeetingGenerator {
 
     public static List<Meeting> DUMMY_MEETINGS = Arrays.asList(
-            new Meeting("Meeting A", MeetingRooms.AMSTERDAM.getCity(), MeetingRooms.AMSTERDAM.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), "Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
-            new Meeting("Meeting B", MeetingRooms.BERLIN.getCity(), MeetingRooms.BERLIN.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), "Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
-            new Meeting("Meeting C", MeetingRooms.BRUSSELS.getCity(), MeetingRooms.BRUSSELS.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), "Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
-            new Meeting("Meeting D", MeetingRooms.BUCHAREST.getCity(), MeetingRooms.BUCHAREST.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), "Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
-            new Meeting("Meeting E", MeetingRooms.LONDON.getCity(), MeetingRooms.PARIS.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), "Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
-            new Meeting("Meeting F", MeetingRooms.MADRID.getCity(), MeetingRooms.MADRID.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), "Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
-            new Meeting("Meeting G", MeetingRooms.MILAN.getCity(), MeetingRooms.MILAN.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), "Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
-            new Meeting("Meeting H", MeetingRooms.PARIS.getCity(), MeetingRooms.PARIS.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), "Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
-            new Meeting("Meeting I", MeetingRooms.PRAGUE.getCity(), MeetingRooms.PRAGUE.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), "Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
-            new Meeting("Meeting I", MeetingRooms.VIENNA.getCity(), MeetingRooms.VIENNA.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), "Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com")
+            new Meeting("Meeting A", MeetingRooms.AMSTERDAM.getCity(), MeetingRooms.AMSTERDAM.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), LocalTime.of(14, 45), "Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
+            new Meeting("Meeting B", MeetingRooms.BERLIN.getCity(), MeetingRooms.BERLIN.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), LocalTime.of(14, 45),"Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
+            new Meeting("Meeting C", MeetingRooms.BRUSSELS.getCity(), MeetingRooms.BRUSSELS.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), LocalTime.of(14, 45),"Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
+            new Meeting("Meeting D", MeetingRooms.BUCHAREST.getCity(), MeetingRooms.BUCHAREST.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), LocalTime.of(14, 45),"Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
+            new Meeting("Meeting E", MeetingRooms.LONDON.getCity(), MeetingRooms.PARIS.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), LocalTime.of(14, 45),"Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
+            new Meeting("Meeting F", MeetingRooms.MADRID.getCity(), MeetingRooms.MADRID.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), LocalTime.of(14, 45),"Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
+            new Meeting("Meeting G", MeetingRooms.MILAN.getCity(), MeetingRooms.MILAN.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), LocalTime.of(14, 45),"Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
+            new Meeting("Meeting H", MeetingRooms.PARIS.getCity(), MeetingRooms.PARIS.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), LocalTime.of(14, 45),"Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
+            new Meeting("Meeting I", MeetingRooms.PRAGUE.getCity(), MeetingRooms.PRAGUE.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), LocalTime.of(14, 45),"Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"),
+            new Meeting("Meeting I", MeetingRooms.VIENNA.getCity(), MeetingRooms.VIENNA.getUrl(), LocalDate.of(2022, 01, 30), LocalTime.of(14, 00), LocalTime.of(14, 45),"Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com")
     );
 
     static List<Meeting> generateMeetings() {

@@ -8,47 +8,45 @@ import androidx.annotation.RequiresApi;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoField;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Meeting implements Parcelable {
 
-    String mMeetingName;
-    String mMeetingRoomName;
-    String mMeetingRoomUrl;
-    LocalDate mMeetingDate;
-    LocalTime mMeetingTime;
-    String mTopic;
-    String mParticipatingCollaborators;
+    String meetingName;
+    String meetingRoomName;
+    String meetingRoomUrl;
+    LocalDate meetingDate;
+    LocalTime meetingStart;
+    LocalTime meetingEnd;
+    String topic;
+    String participatingCollaborators;
 
-    long mLongMeetingTime;
-    long mLongMeetingDAte;
-
-    public Meeting(String meetingName, String meetingRoomName, String meetingRoomUrl, LocalDate meetingDate, LocalTime meetingTime, String topic, String participatingCollaborators) {
-        mMeetingName = meetingName;
-        mMeetingRoomName = meetingRoomName;
-        mMeetingRoomUrl = meetingRoomUrl;
-        mMeetingDate = meetingDate;
-        mMeetingTime = meetingTime;
-        mTopic = topic;
-        mParticipatingCollaborators = participatingCollaborators;
+    public Meeting(String meetingName, String meetingRoomName, String meetingRoomUrl, LocalDate meetingDate, LocalTime meetingStart, LocalTime meetingEnd, String topic, String participatingCollaborators) {
+        this.meetingName = meetingName;
+        this.meetingRoomName = meetingRoomName;
+        this.meetingRoomUrl = meetingRoomUrl;
+        this.meetingDate = meetingDate;
+        this.meetingStart = meetingStart;
+        this.meetingEnd = meetingEnd;
+        this.topic = topic;
+        this.participatingCollaborators = participatingCollaborators;
     }
 
     protected Meeting(Parcel in) {
-        mMeetingName = in.readString();
-        mMeetingRoomName = in.readString();
-        mMeetingRoomUrl = in.readString();
-        mTopic = in.readString();
-        mParticipatingCollaborators = in.readString();
+        meetingName = in.readString();
+        meetingRoomName = in.readString();
+        meetingRoomUrl = in.readString();
+        topic = in.readString();
+        participatingCollaborators = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mMeetingName);
-        dest.writeString(mMeetingRoomName);
-        dest.writeString(mMeetingRoomUrl);
-        dest.writeString(mTopic);
-        dest.writeString(mParticipatingCollaborators);
+        dest.writeString(meetingName);
+        dest.writeString(meetingRoomName);
+        dest.writeString(meetingRoomUrl);
+        dest.writeString(topic);
+        dest.writeString(participatingCollaborators);
     }
 
     @Override
@@ -69,59 +67,67 @@ public class Meeting implements Parcelable {
     };
 
     public String getMeetingName() {
-        return mMeetingName;
+        return meetingName;
     }
 
     public void setMeetingName(String meetingName) {
-        mMeetingName = meetingName;
+        this.meetingName = meetingName;
     }
 
     public String getMeetingRoomName() {
-        return mMeetingRoomName;
+        return meetingRoomName;
     }
 
     public void setMeetingRoomName(String meetingRoomName) {
-        mMeetingRoomName = meetingRoomName;
+        this.meetingRoomName = meetingRoomName;
     }
 
     public String getMeetingRoomUrl() {
-        return mMeetingRoomUrl;
+        return meetingRoomUrl;
     }
 
     public void setMeetingRoomUrl(String meetingRoomUrl) {
-        mMeetingRoomUrl = meetingRoomUrl;
+        this.meetingRoomUrl = meetingRoomUrl;
     }
 
     public LocalDate getMeetingDate() {
-        return mMeetingDate;
+        return meetingDate;
     }
 
     public void setMeetingDate(LocalDate meetingDate) {
-        mMeetingDate = meetingDate;
+        this.meetingDate = meetingDate;
     }
 
-    public LocalTime getMeetingTime() {
-        return mMeetingTime;
+    public LocalTime getMeetingStart() {
+        return meetingStart;
     }
 
-    public void setMeetingTime(LocalTime meetingTime) {
-        mMeetingTime = meetingTime;
+    public void setMeetingStart(LocalTime meetingStart) {
+        this.meetingStart = meetingStart;
+    }
+
+    public LocalTime getMeetingEnd() {
+        return meetingEnd;
+    }
+
+    public void setMeetingEnd(LocalTime meetingEnd) {
+        this.meetingEnd = meetingEnd;
     }
 
     public String getTopic() {
-        return mTopic;
+        return topic;
     }
 
     public void setTopic(String topic) {
-        mTopic = topic;
+        this.topic = topic;
     }
 
     public String getParticipatingCollaborators() {
-        return mParticipatingCollaborators;
+        return participatingCollaborators;
     }
 
     public void setParticipatingCollaborators(String participatingCollaborators) {
-        mParticipatingCollaborators = participatingCollaborators;
+        this.participatingCollaborators = participatingCollaborators;
     }
 
 }

@@ -38,8 +38,8 @@ public enum Collaborators {
         this.email = email;
     }
 
-    public static int collaboratorsLength(){
-     return Collaborators.values().length;
+    public static int collaboratorsLength() {
+        return Collaborators.values().length;
     }
 
     public static int collaboratorsNumber(String[] args) {

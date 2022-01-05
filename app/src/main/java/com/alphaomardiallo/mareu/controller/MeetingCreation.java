@@ -58,11 +58,11 @@ public class MeetingCreation extends AppCompatActivity {
     private EditText editTextMeetingName;
     private FloatingActionButton FABMeetingValidation;
 
-    private DatePickerDialog.OnDateSetListener mDateSetListener;
-    private TimePickerDialog.OnTimeSetListener mTimeSetListenerStart;
-    private TimePickerDialog.OnTimeSetListener mTimeSetListenerEnd;
+    private DatePickerDialog.OnDateSetListener dateSetListener;
+    private TimePickerDialog.OnTimeSetListener timeSetListenerStart;
+    private TimePickerDialog.OnTimeSetListener timeSetListenerEnd;
 
-    private LocalDate mDate;
+    private LocalDate meetingDate;
     private LocalTime startingTime;
     private LocalTime endingTime;
 
@@ -125,13 +125,13 @@ public class MeetingCreation extends AppCompatActivity {
             DatePickerDialog dialog = new DatePickerDialog(
                     MeetingCreation.this,
                     android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                    mDateSetListener,
+                    dateSetListener,
                     year, month, day);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.show();
             dateSet = true;
         });
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -139,7 +139,7 @@ public class MeetingCreation extends AppCompatActivity {
                 Log.d(TAG, "onDateSet: dd/MM/yyyy: " + day + "/" + month + "/" + year);
 
                 LocalDate date = LocalDate.of(year, month, day);
-                mDate = date;
+                meetingDate = date;
                 DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 buttonSetDate.setText(date.format(dateFormatter));
             }
@@ -156,7 +156,7 @@ public class MeetingCreation extends AppCompatActivity {
                 TimePickerDialog dialog = new TimePickerDialog(
                         MeetingCreation.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mTimeSetListenerStart,
+                        timeSetListenerStart,
                         hours, minutes,
                         DateFormat.is24HourFormat(MeetingCreation.this));
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -164,7 +164,7 @@ public class MeetingCreation extends AppCompatActivity {
                 timeSet = true;
             }
         });
-        mTimeSetListenerStart = new TimePickerDialog.OnTimeSetListener() {
+        timeSetListenerStart = new TimePickerDialog.OnTimeSetListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
@@ -188,14 +188,14 @@ public class MeetingCreation extends AppCompatActivity {
                 TimePickerDialog dialog = new TimePickerDialog(
                         MeetingCreation.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mTimeSetListenerEnd,
+                        timeSetListenerEnd,
                         hours, minutes,
                         DateFormat.is24HourFormat(MeetingCreation.this));
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
         });
-        mTimeSetListenerEnd = new TimePickerDialog.OnTimeSetListener() {
+        timeSetListenerEnd = new TimePickerDialog.OnTimeSetListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
@@ -211,7 +211,7 @@ public class MeetingCreation extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (timeSet && dateSet & roomSet && textSet) {
-                    createNewMeeting(editTextMeetingName.getText().toString(), spinnerSelectMeetingRoom.getSelectedItem().toString(), mDate, startingTime, editTextTopic.getText().toString(), textViewParticipants.getText().toString());
+                    createNewMeeting(editTextMeetingName.getText().toString(), spinnerSelectMeetingRoom.getSelectedItem().toString(), meetingDate, startingTime, endingTime, editTextTopic.getText().toString(), textViewParticipants.getText().toString());
                     Toast.makeText(MeetingCreation.this, "Meeting created", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(MeetingCreation.this, "Fill all fields", Toast.LENGTH_SHORT).show();
@@ -262,10 +262,11 @@ public class MeetingCreation extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void createNewMeeting(String meetingName, String meetingRoomName, LocalDate mDate,
-                                  LocalTime startingTime, String topic, String participatingCollaborators) {
+                                  LocalTime startingTime, LocalTime endingTime, String topic, String participatingCollaborators) {
         String meetingRoomName1 = meetingRoomName;
-        this.mDate = mDate;
+        this.meetingDate = mDate;
         this.startingTime = startingTime;
+        this.endingTime = endingTime;
 
         MeetingRooms meetingRoom;
 
@@ -307,7 +308,7 @@ public class MeetingCreation extends AppCompatActivity {
         assert meetingRoom != null;
         String meetingRoomUrl = meetingRoom.getUrl();
         meetingRoomName1 = meetingRoom.getCity();
-        Meeting newMeeting = new Meeting(meetingName, meetingRoomName1, meetingRoomUrl, this.mDate, this.startingTime, topic, participatingCollaborators);
+        Meeting newMeeting = new Meeting(meetingName, meetingRoomName1, meetingRoomUrl, this.meetingDate, this.startingTime, this.endingTime, topic, participatingCollaborators);
         meetings.add(newMeeting);
         FABMeetingValidation.setVisibility(View.GONE);
         modifyImageView(meetingRoomUrl);
