@@ -62,10 +62,13 @@ This application has 5 unit tests and 6 instrumented tests as well as one espres
 1. RecyclerView should not be empty : recylcerview displays all meetings.
 2. RecyclerView should delete meeting with success. 
 3. RecyclerView should open meeting detail with correct data. 
-4. List_deleteAction_shouldRemoveItem
-5. FavouriteNeighbourFragment_ShouldOnlyDisplayFavoriteNeighbours
-6. 
+4. Opens creation activity and meeting is not created.
+5. Opens creation activity and meeting is created.
+6. Filter by date or by meeting room.
 
 ## How to improve this project
 
-You can either clone the repository and freely reuse it or you can make a pull request. 
+* Display meeting participants as chips in meeting creation activity. 
+* Create new filter options. 
+* 
+You can either clone the repository and freely reuse it or you can make a pull request. It will only be accepted once I validate my retraining. 
