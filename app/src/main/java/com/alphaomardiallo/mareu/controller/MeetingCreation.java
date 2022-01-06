@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -91,6 +92,7 @@ public class MeetingCreation extends AppCompatActivity {
         FABMeetingValidation = findViewById(R.id.floatingActionButtonValidationMeetingCreation);
         buttonSetEndTime = findViewById(R.id.buttonEndTimeMeetingCreation);
 
+        textViewParticipants.setMovementMethod(new ScrollingMovementMethod());
 
         //Toolbar Settings
         setSupportActionBar(toolbar);

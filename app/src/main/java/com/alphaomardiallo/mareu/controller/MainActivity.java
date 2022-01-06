@@ -121,14 +121,16 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
             String date = savedInstanceState.getString("filterDialogDate");
             if (room != null) {
                 filterDialogRoomSelected = room;
+                buttonResetFilters.setVisibility(View.VISIBLE);
+                buttonApplyFilters.setVisibility(View.VISIBLE);
             }
             if (date != null) {
                 DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
                 filterDialogDateSelected = LocalDate.parse(String.format(date, dateFormatter));
+                buttonResetFilters.setVisibility(View.VISIBLE);
+                buttonApplyFilters.setVisibility(View.VISIBLE);
             }
             listDisplayedMeetings = list;
-            buttonResetFilters.setVisibility(View.VISIBLE);
-            buttonApplyFilters.setVisibility(View.VISIBLE);
             initializeRecyclerView();
         }
     }

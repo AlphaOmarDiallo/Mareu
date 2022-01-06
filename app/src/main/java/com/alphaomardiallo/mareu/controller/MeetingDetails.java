@@ -2,12 +2,14 @@ package com.alphaomardiallo.mareu.controller;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.alphaomardiallo.mareu.R;
 import com.alphaomardiallo.mareu.models.Meeting;
@@ -34,6 +36,8 @@ public class MeetingDetails extends AppCompatActivity {
         TextView textViewDateDisplay = findViewById(R.id.textViewDateDisplayDetailActivity);
         TextView textViewStartingTime = findViewById(R.id.textViewStartingTimeDisplayDetailActivity);
         TextView textViewEndingTime = findViewById(R.id.textViewEndingTimeDisplayDetailActivity);
+
+        ConstraintLayout meetingDetail = findViewById(R.id.meeting_detail);
 
         //Toolbar Settings
         setSupportActionBar(toolbar);

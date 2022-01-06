@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ public class FilterDialog extends AppCompatDialogFragment {
     private FilterDialogListener listener;
     private RadioButton radioButtonDate;
     private RadioButton radioButtonMeetingRoom;
+    private ScrollView scrollView;
 
 
     @NonNull
@@ -42,7 +44,6 @@ public class FilterDialog extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.layout_dialog_filter, null);
 
         builder.setView(view)
-                .setTitle(R.string.filter_meetings)
                 .setPositiveButton(R.string.validate, new DialogInterface.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
@@ -62,11 +63,13 @@ public class FilterDialog extends AppCompatDialogFragment {
                         listener.applyTexts(date, room);
                     }
                 });
+        scrollView = view.findViewById(R.id.scrollView);
         datePicker = view.findViewById(R.id.datePickerFilterDialog);
         spinner = view.findViewById(R.id.spinnerFilterDialog);
         radioButtonDate = view.findViewById(R.id.radioButtonDate);
         radioButtonMeetingRoom = view.findViewById(R.id.radioButtonMeetingRoom);
 
+        scrollView.setScrollbarFadingEnabled(false);
         radioButtonDate.setChecked(true);
 
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getContext(), R.array.meeting_room_spinner_filter_dialog, android.R.layout.simple_spinner_item);

@@ -29,21 +29,19 @@
         android:contentDescription="@string/picture_of_the_meeting_room"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarDetailActivity"
-        app:layout_constraintVertical_bias="1.0"
         tools:srcCompat="@tools:sample/avatars" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewMeetingRoomDetailActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toStartOf="@+id/guideline5">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,7 +52,6 @@
                 android:id="@+id/textViewMeetingNameDetailActivity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
                 android:padding="4dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -77,10 +74,10 @@
         android:id="@+id/cardViewMeetingRoomAndTopic"
         style="@style/cardView_detail_activity"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/cardView3"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewDetailActivity">
 
@@ -144,13 +141,11 @@
         style="@style/cardView_detail_activity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="80dp"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/cardView2"
-        app:layout_constraintEnd_toEndOf="@+id/cardViewMeetingRoomAndTopic"
-        app:layout_constraintStart_toStartOf="@+id/cardViewMeetingRoomAndTopic"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewMeetingRoomAndTopic">
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewDetailActivity"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarDetailActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -168,8 +163,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/textViewStartingTimeDisplayDetailActivity"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textViewStartingTimeDisplayDetailActivity"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toTopOf="@+id/textViewStartingTimeDisplayDetailActivity" />
 
             <TextView
                 android:id="@+id/textViewStartingTimeDisplayDetailActivity"
@@ -211,8 +205,8 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView3">
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/guideline6">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -249,6 +243,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

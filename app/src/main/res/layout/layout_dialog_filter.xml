@@ -1,112 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:layout_constraintLeft_toLeftOf="parent">
 
-    <DatePicker
-        android:id="@+id/datePickerFilterDialog"
-        style="@style/Widget.MaterialComponents.MaterialCalendar.HeaderTitle"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        android:calendarTextColor="@color/cornFlowerBlue"
-        android:headerBackground="@color/steelBlue"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/datePickerFilterDialog">
+        <DatePicker
+            android:id="@+id/datePickerFilterDialog"
+            style="@style/Widget.MaterialComponents.MaterialCalendar.HeaderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:calendarTextColor="@color/cornFlowerBlue"
+            android:headerBackground="@color/steelBlue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardView" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/datePickerFilterDialog"
+            app:layout_constraintEnd_toEndOf="@+id/datePickerFilterDialog"
+            app:layout_constraintStart_toStartOf="@+id/datePickerFilterDialog"
+            app:layout_constraintTop_toBottomOf="@+id/cardView4">
 
-            <TextView
-                android:id="@+id/textViewDateDetailActivity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:padding="4dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:text="Choose a meeting room"
-                android:textSize="16sp" />
-
-            <Spinner
-                android:id="@+id/spinnerFilterDialog"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp" />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/textViewDateDetailActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:padding="4dp"
+                    android:text="Choose a meeting room"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textViewFilterBy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:padding="4dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:text="Filter by..." />
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-
-                <RadioButton
-                    android:id="@+id/radioButtonDate"
+                <Spinner
+                    android:id="@+id/spinnerFilterDialog"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/date" />
+                    android:layout_margin="4dp" />
+            </LinearLayout>
 
-                <RadioButton
-                    android:id="@+id/radioButtonMeetingRoom"
-                    android:layout_width="match_parent"
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:padding="4dp"
+            app:layout_constraintBottom_toTopOf="@id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewFilterBy"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/meeting_room" />
-            </RadioGroup>
+                    android:layout_marginStart="4dp"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="Filter by..."
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
 
-        </LinearLayout>
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-    </androidx.cardview.widget.CardView>
+                    <RadioButton
+                        android:id="@+id/radioButtonDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date" />
 
+                    <RadioButton
+                        android:id="@+id/radioButtonMeetingRoom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/meeting_room" />
+                </RadioGroup>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
