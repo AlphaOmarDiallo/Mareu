@@ -24,14 +24,14 @@ This application uses Eventbus to simplifiy communication between the different 
   * DeleteMeetingEvent
   * OpenMeetingEvent
   * SendPositionEvent
-They are triggered in the recycler view nested in the viewpager. They trigger these events.  
+They are triggered in the recycler view. They trigger these events.  
 An improvment, would be to consider refactoring the app to use more performant tool as RxJava or refactor it in Kotlin and use coroutines. 
 
 ### Service
 
 It contains the dummy API to run this application. 
 
-### ui.neighhbour_list
+### controller
 
 It contains the classes linked to the activities and fragments. 
 
@@ -49,24 +49,22 @@ Keep commit clear and self-explanatory. Clean messy branches before merge.
 
 ## Testing
 
-This application has 5 unit tests and 5 instrumented tests as well as one espresso recorded test. All the test are on status passed. 
+This application has 5 unit tests and 6 instrumented tests as well as one espresso recorded test. All the test are on status passed. 
 
 #### Unit tests
-1. Delete neighbour with success.
-2. Get neighbour with sucess.
-3. Get favorite neighbour with success.
-4. Display favorite neighbour only.
-5. Add to favorite. 
+1. Get meeeting with success : checking that all meetings in the API are in the meeting list.
+2. Delete meeting with success : checking that it is possible to remove meeting from a list. 
+3. filter Meeting by meeting room with success : checking that the meeeting room filter works. 
+4. filter meeting by date with success : check that the date filter works. 
+5. Create new meeting : check that a new meeting can be created.  
 
 ### Instrumented tests
-1. MyNeighbourList_OpenUserFullProfileAction_ShouldOpenUserProfileWithItsData
-2. NeighboursList_shouldNotBeEmpty
-3. UserInformationActivity_nameIsDisplayed_ShouldMatchUserNameThatWasClickedOn
+1. RecyclerView should not be empty : recylcerview displays all meetings.
+2. RecyclerView should delete meeting with success. 
+3. RecyclerView should open meeting detail with correct data. 
 4. List_deleteAction_shouldRemoveItem
 5. FavouriteNeighbourFragment_ShouldOnlyDisplayFavoriteNeighbours
-
-### Espresso recorded test
-1. List neighbour activity test 2
+6. 
 
 ## How to improve this project
 
