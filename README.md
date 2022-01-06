@@ -10,7 +10,9 @@ This is an Android application, it is coded in Java and runs on SDK version 31. 
 ## Project architecture
 
 The application displays one activity within which you find a recyclerview with all the meetings booked. You can delete a meeting, open the details of a meeting (new activity), create a meeting (new activity) and filter the meetings by meetingrooms or date.
+
 <img width="489" alt="Use_cases_Mareu" src="https://user-images.githubusercontent.com/73855044/148439478-c70ebc41-453e-4f0a-86cc-339d7074375a.png">
+
 <img width="449" alt="Class_diagram_MaReu" src="https://user-images.githubusercontent.com/73855044/148439509-dc8bdd91-056a-4b3c-bb09-a254780dec36.png">
 
 ### Model package
