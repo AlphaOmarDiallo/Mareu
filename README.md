@@ -70,5 +70,4 @@ This application has 5 unit tests and 6 instrumented tests as well as one espres
 
 * Display meeting participants as chips in meeting creation activity. 
 * Create new filter options. 
-* 
 You can either clone the repository and freely reuse it or you can make a pull request. It will only be accepted once I validate my retraining. 
