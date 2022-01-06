@@ -8,7 +8,6 @@ import com.alphaomardiallo.mareu.models.Meeting;
 import com.alphaomardiallo.mareu.models.MeetingRooms;
 import com.alphaomardiallo.mareu.service.MeetingApiService;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.OrderWith;

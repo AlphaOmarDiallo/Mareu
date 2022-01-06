@@ -1,4 +1,4 @@
-package com.alphaomardiallo.mareu.controller;
+package com.alphaomardiallo.mareu.controller.utils;
 
 import android.view.View;
 
@@ -9,7 +9,7 @@ import com.alphaomardiallo.mareu.R;
 
 import org.hamcrest.Matcher;
 
-public class DeleteMeeting implements ViewAction {
+public class OpenMeetingInformation implements ViewAction {
     @Override
     public Matcher<View> getConstraints() {
         return null;
@@ -17,12 +17,12 @@ public class DeleteMeeting implements ViewAction {
 
     @Override
     public String getDescription() {
-        return "Clicked on delete";
+        return "click on meeting avatar to open detailed information about it";
     }
 
     @Override
     public void perform(UiController uiController, View view) {
-        View button = view.findViewById(R.id.imageButtonDeleteMeetingCard);
+        View button = view.findViewById(R.id.imageViewMeetingCard);
         button.performClick();
     }
 }

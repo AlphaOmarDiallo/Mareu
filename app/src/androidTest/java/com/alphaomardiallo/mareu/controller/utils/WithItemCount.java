@@ -1,5 +1,8 @@
-package com.alphaomardiallo.mareu.controller;
+package com.alphaomardiallo.mareu.controller.utils;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,8 +10,8 @@ import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.ViewAssertion;
 
 import org.hamcrest.Matcher;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Assert;
 
 public class WithItemCount implements ViewAssertion {
     private final Matcher<Integer> matcher;
@@ -30,9 +33,13 @@ public class WithItemCount implements ViewAssertion {
         if (noViewFoundException != null) {
             throw noViewFoundException;
         }
-
         RecyclerView recyclerView = (RecyclerView) view;
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
-        Assert.assertThat(adapter.getItemCount(), matcher);
+        try{
+            MatcherAssert.assertThat(adapter.getItemCount(), matcher);
+        } catch (Exception e){
+            e.printStackTrace();
+            Log.e(TAG, "check: withItemCount", null);
+        }
     }
 }

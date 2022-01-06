@@ -10,21 +10,21 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static com.alphaomardiallo.mareu.controller.WithItemCount.withItemCount;
+import static com.alphaomardiallo.mareu.controller.utils.WithItemCount.withItemCount;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThat;
 
-import android.content.pm.ActivityInfo;
-
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.rule.ActivityTestRule;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 
 import com.alphaomardiallo.mareu.R;
+import com.alphaomardiallo.mareu.controller.utils.DeleteMeeting;
+import com.alphaomardiallo.mareu.controller.utils.OpenMeetingInformation;
 import com.alphaomardiallo.mareu.di.DI;
 import com.alphaomardiallo.mareu.models.Collaborators;
 import com.alphaomardiallo.mareu.models.Meeting;
@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @OrderWith(Alphanumeric.class)
-@RunWith(AndroidJUnit4.class)
+@RunWith(AndroidJUnit4ClassRunner.class)
 public class MainActivityTest {
 
     private static final int ITEM_COUNT = 10;
@@ -54,13 +54,12 @@ public class MainActivityTest {
     private List<Meeting> meetingList;
 
     @Rule
-    public ActivityTestRule<MainActivity> activityTestRule =
-            new ActivityTestRule<>(MainActivity.class);
+    public ActivityScenarioRule<MainActivity> activityScenarioRule = new ActivityScenarioRule<>(MainActivity.class);
 
     @Before
     public void setup() {
-        MainActivity activity = activityTestRule.getActivity();
-        MatcherAssert.assertThat(activity,notNullValue());;
+        ActivityScenario<MainActivity> activity = activityScenarioRule.getScenario();
+        MatcherAssert.assertThat(activity, notNullValue());
 
         service = DI.getMeetingsApiService();
         MatcherAssert.assertThat(service, notNullValue());
@@ -81,7 +80,7 @@ public class MainActivityTest {
      * Test to check that when deleted, the item is removed from the screen
      */
     @Test
-    public void testB_recyclerView_ShouldDeleteMeetingWithSuccess() throws InterruptedException {
+    public void testB_recyclerView_ShouldDeleteMeetingWithSuccess() {
         onView(allOf(ViewMatchers.withId(R.id.recyclerViewMainActivity), isCompletelyDisplayed()))
                 .check(withItemCount(ITEM_COUNT));
         onView(allOf(ViewMatchers.withId(R.id.recyclerViewMainActivity), isCompletelyDisplayed()))
@@ -95,7 +94,7 @@ public class MainActivityTest {
     @Test
     public void testC_recyclerView_ShouldOpenMeetingDetail_WithCorrectData() {
         onView(allOf(ViewMatchers.withId(R.id.recyclerViewMainActivity), isCompletelyDisplayed()))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(MEETING_TO_TEST , new OpenMeetingInformation()));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(MEETING_TO_TEST, new OpenMeetingInformation()));
         onView(withId(R.id.meeting_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.textViewMeetingNameDetailActivity)).check(matches(withText(service.getMeetings().get(MEETING_TO_TEST).getMeetingName())));
         onView(isRoot()).perform(ViewActions.pressBack());

@@ -20,6 +20,8 @@ import org.junit.runner.RunWith;
 import org.junit.runner.manipulation.Alphanumeric;
 import org.junit.runners.JUnit4;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,45 +29,62 @@ import java.util.stream.Collectors;
 @RunWith(JUnit4.class)
 public class MainActivityTest {
 
-    private MeetingApiService service;
+    private static int MEETING_TO_TEST;
+
+    private List<Meeting> meetingList;
 
     @Before
     public void setup() {
-        service = DI.getMeetingsApiService();
+        MeetingApiService service = DI.getMeetingsApiService();
+        meetingList = service.getMeetings();
+        MEETING_TO_TEST = 0;
     }
 
     @Test
     public void testA_getMeetingsWithSuccess() {
-        List<Meeting> meetings = service.getMeetings();
+        //List<Meeting> meetings = service.getMeetings();
         List<Meeting> expectedMeetings = DummyMeetingGenerator.DUMMY_MEETINGS;
-        long meetingsSize = meetings.size();
+        long meetingsSize = meetingList.size();
         long expectedMeetingSize = expectedMeetings.size();
-        MatcherAssert.assertThat(meetings, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedMeetings.toArray()));
+        MatcherAssert.assertThat(meetingList, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedMeetings.toArray()));
         assertEquals(meetingsSize, expectedMeetingSize);
     }
 
     @Test
     public void testB_deleteMeetingWithSuccess() {
-        List<Meeting> meetings = service.getMeetings();
-        int meetingToDelete = 0;
-        long meetingsSizeBefore = meetings.size();
-        meetings.remove(meetingToDelete);
-        long meetingSizeAfter = meetings.size();
+        long meetingsSizeBefore = meetingList.size();
+        meetingList.remove(MEETING_TO_TEST);
+        long meetingSizeAfter = meetingList.size();
         assertNotEquals(meetingsSizeBefore, meetingSizeAfter);
-        assertFalse(service.getMeetings().contains(meetingToDelete));
+        assertFalse(meetingList.contains(MEETING_TO_TEST));
     }
 
     @Test
     public void testC_filterMeetingByMeetingRoomWithSuccess() {
-        List<Meeting> meetings = service.getMeetings();
         String filterRoom = MeetingRooms.AMSTERDAM.getCity();
-        List<Meeting> expectedMeetings = meetings.stream()
+        List<Meeting> expectedMeetings = meetingList.stream()
                 .filter(meeting -> meeting.getMeetingRoomName().equalsIgnoreCase(filterRoom))
                 .collect(Collectors.toList());
         boolean containsAll = true;
         for (Meeting meeting : expectedMeetings) {
-
             if (!meeting.getMeetingRoomName().equalsIgnoreCase(filterRoom)) {
+                containsAll = false;
+                break;
+            }
+        }
+        assertTrue(containsAll);
+    }
+
+    @Test
+    public void testD_filterMeetingsByDateWithSuccess() {
+        LocalDate filterDate = LocalDate.now();
+        meetingList.add(new Meeting("Meeting I", MeetingRooms.VIENNA.getCity(), MeetingRooms.VIENNA.getUrl(), filterDate, LocalTime.of(14, 00), LocalTime.of(14, 45),"Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"));
+        List<Meeting> expectedMeetings = meetingList.stream()
+                .filter(meeting -> meeting.getMeetingDate().toEpochDay() == filterDate.toEpochDay())
+                .collect(Collectors.toList());
+        boolean containsAll = true;
+        for (Meeting meeting : expectedMeetings) {
+            if (meeting.getMeetingDate().toEpochDay() != filterDate.toEpochDay()) {
                 containsAll = false;
             }
         }
