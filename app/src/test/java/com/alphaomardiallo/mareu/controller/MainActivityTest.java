@@ -42,7 +42,6 @@ public class MainActivityTest {
 
     @Test
     public void testA_getMeetingsWithSuccess() {
-        //List<Meeting> meetings = service.getMeetings();
         List<Meeting> expectedMeetings = DummyMeetingGenerator.DUMMY_MEETINGS;
         long meetingsSize = meetingList.size();
         long expectedMeetingSize = expectedMeetings.size();

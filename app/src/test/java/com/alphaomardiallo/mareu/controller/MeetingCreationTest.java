@@ -39,7 +39,6 @@ public class MeetingCreationTest {
     String topic = "test meeting";
     String participatingCollaborators = Collaborators.ALPHADIALLO.getEmail();
 
-
     @Test
     public void testA_createNewMeeting() {
         Meeting meetingA = new Meeting(meetingName, meetingRoomName, meetingRoomUrl, meetingDate, meetingStart, meetingEnd, topic, participatingCollaborators);

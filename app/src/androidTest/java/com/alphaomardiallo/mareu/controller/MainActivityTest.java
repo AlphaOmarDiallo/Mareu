@@ -13,6 +13,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.alphaomardiallo.mareu.controller.utils.WithItemCount.withItemCount;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import androidx.test.core.app.ActivityScenario;
@@ -40,6 +41,7 @@ import org.junit.runner.RunWith;
 import org.junit.runner.manipulation.Alphanumeric;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,10 +95,17 @@ public class MainActivityTest {
      */
     @Test
     public void testC_recyclerView_ShouldOpenMeetingDetail_WithCorrectData() {
+        Meeting meeting = meetingList.get(MEETING_TO_TEST);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         onView(allOf(ViewMatchers.withId(R.id.recyclerViewMainActivity), isCompletelyDisplayed()))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(MEETING_TO_TEST, new OpenMeetingInformation()));
         onView(withId(R.id.meeting_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.textViewMeetingNameDetailActivity)).check(matches(withText(service.getMeetings().get(MEETING_TO_TEST).getMeetingName())));
+        onView(withId(R.id.textViewMeetingNameDetailActivity)).check(matches(withText(meeting.getMeetingName())));
+        onView(withId(R.id.textViewDateDisplayDetailActivity)).check(matches(withText(meeting.getMeetingDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))));
+        onView(withId(R.id.textViewTopicDisplayDetailActivity)).check(matches(withText(meeting.getTopic())));
+        onView(withId(R.id.textViewStartingTimeDisplayDetailActivity)).check(matches(withText(meeting.getMeetingStart().format(formatter))));
+        onView(withId(R.id.textViewEndingTimeDisplayDetailActivity)).check(matches(withText(meeting.getMeetingEnd().format(formatter))));
+        onView(withId(R.id.textViewParticipantsDisplayDetailActivity)).check(matches(withText(meeting.getParticipatingCollaborators())));
         onView(isRoot()).perform(ViewActions.pressBack());
     }
 
@@ -104,7 +113,33 @@ public class MainActivityTest {
      * Test to check if meeting creation activity is opened when FAB clicked and meeting is created
      */
     @Test
-    public void testD_FAB_OpensCreationActivityAndMeetingIsCreated() {
+    public void testD_FAB_OpensCreationActivityAndMeetingIsNotCreated() throws InterruptedException {
+        long meetingsSize = meetingList.size();
+        onView(allOf(ViewMatchers.withId(R.id.recyclerViewMainActivity), isCompletelyDisplayed())).check(withItemCount((int) meetingsSize));
+        onView(withId(R.id.FABCreateMeetingMainActivity)).perform(click());
+        onView(withId(R.id.createMeetingActivity)).check(matches(isDisplayed()));
+        onView(withId(R.id.textfieldInputMeetingNameCreation)).perform(typeText("Meeting Test"));
+        onView(withId(R.id.textfieldInputMeetingTopicCreation)).perform(typeText("Testing the meeting creation activity"));
+        onView(withId(R.id.spinnerMeetingCreation)).perform(click());
+        onView(withText("AMSTERDAM")).perform(click());
+        onView(withId(R.id.buttonSetDateMeetingCreation)).perform(click());
+        onView(withText("OK")).perform(click());
+        onView(withId(R.id.buttonStartTimeMeetingCreation)).perform(click());
+        onView(withText("OK")).perform(click());
+        onView(withId(R.id.floatingActionButtonValidationMeetingCreation)).perform(click());
+        Thread.sleep(1000);
+        onView(isRoot()).perform(ViewActions.pressBack());
+        List<Meeting> meetingsAfterTestMeetingCreated = service.getMeetings();
+        long meetingsAfterTestMeetingCreatedSize = meetingsAfterTestMeetingCreated.size();
+        assertEquals(meetingsSize, meetingsAfterTestMeetingCreatedSize);
+        onView(allOf(ViewMatchers.withId(R.id.recyclerViewMainActivity), isCompletelyDisplayed())).check(withItemCount(meetingList.size()));
+    }
+
+    /**
+     * Test to check if meeting creation activity is opened when FAB clicked and meeting is created
+     */
+    @Test
+    public void testE_FAB_OpensCreationActivityAndMeetingIsCreated() {
         long meetingsSize = meetingList.size();
         onView(allOf(ViewMatchers.withId(R.id.recyclerViewMainActivity), isCompletelyDisplayed())).check(withItemCount((int) meetingsSize));
         onView(withId(R.id.FABCreateMeetingMainActivity)).perform(click());
@@ -129,7 +164,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void testE_filterByDateOrByMeetingRoom() throws InterruptedException {
+    public void testF_filterByDateOrByMeetingRoom() throws InterruptedException {
         LocalDate today = LocalDate.now();
         List<Meeting> filteredMeetings = meetingList.stream()
                 .filter(meeting -> meeting.getMeetingDate().toEpochDay() == today.toEpochDay())
