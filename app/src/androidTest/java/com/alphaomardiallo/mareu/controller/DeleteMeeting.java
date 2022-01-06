@@ -23,5 +23,6 @@ public class DeleteMeeting implements ViewAction {
     @Override
     public void perform(UiController uiController, View view) {
         View button = view.findViewById(R.id.imageButtonDeleteMeetingCard);
+        button.performClick();
     }
 }

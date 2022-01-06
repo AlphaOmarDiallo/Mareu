@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
     @Subscribe
     public void onDeleteMeetingEvent(DeleteMeetingEvent event) {
         Meeting meeting = event.meeting;
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        /*MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
         builder.setMessage(R.string.delete_alert_dialog_message).setTitle(R.string.delete_alert_dialog_title);
         builder.setCancelable(false)
                 .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
@@ -179,7 +179,11 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
                 })
                 .setNegativeButton(R.string.no, (dialogInterface, i) -> dialogInterface.cancel());
         AlertDialog alert = builder.create();
-        alert.show();
+        alert.show();*/
+        listMeetings.remove(meeting);
+        adapter.notifyItemRemoved(itemPosition);
+        filterList();
+        Toast.makeText(MainActivity.this, "Meeting deleted", Toast.LENGTH_SHORT).show();
     }
 
     //Application lifecycle state ===================================================================
