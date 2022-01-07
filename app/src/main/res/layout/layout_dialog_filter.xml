@@ -29,6 +29,8 @@
             android:id="@+id/cardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@id/datePickerFilterDialog"
             app:layout_constraintEnd_toEndOf="@+id/datePickerFilterDialog"
             app:layout_constraintStart_toStartOf="@+id/datePickerFilterDialog"

@@ -118,15 +118,16 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
         if (savedInstanceState != null) {
             List<Meeting> list = savedInstanceState.getParcelableArrayList("mDisplayMeetings");
             String room = savedInstanceState.getString("filterRoomDialog");
+            Log.d(TAG, "onCreate: saved" + room);
             String date = savedInstanceState.getString("filterDialogDate");
             if (room != null) {
                 filterDialogRoomSelected = room;
-                buttonResetFilters.setVisibility(View.VISIBLE);
-                buttonApplyFilters.setVisibility(View.VISIBLE);
             }
             if (date != null) {
                 DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
                 filterDialogDateSelected = LocalDate.parse(String.format(date, dateFormatter));
+            }
+            if (list.size() != listMeetings.size()){
                 buttonResetFilters.setVisibility(View.VISIBLE);
                 buttonApplyFilters.setVisibility(View.VISIBLE);
             }
@@ -166,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
     @Subscribe
     public void onDeleteMeetingEvent(DeleteMeetingEvent event) {
         Meeting meeting = event.meeting;
-        /*MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
         builder.setMessage(R.string.delete_alert_dialog_message).setTitle(R.string.delete_alert_dialog_title);
         builder.setCancelable(false)
                 .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
@@ -181,10 +182,10 @@ public class MainActivity extends AppCompatActivity implements FilterDialog.Filt
                 })
                 .setNegativeButton(R.string.no, (dialogInterface, i) -> dialogInterface.cancel());
         AlertDialog alert = builder.create();
-        alert.show();*/
-        listMeetings.remove(meeting);
+        alert.show();
+        /*listMeetings.remove(meeting);
         adapter.notifyItemRemoved(itemPosition);
-        filterList();
+        filterList();*/
         Toast.makeText(MainActivity.this, "Meeting deleted", Toast.LENGTH_SHORT).show();
     }
 

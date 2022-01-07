@@ -190,4 +190,6 @@ public class MainActivityTest {
         onView(allOf(ViewMatchers.withId(R.id.recyclerViewMainActivity), isCompletelyDisplayed())).check(withItemCount(filteredMeetings.size()));
         Thread.sleep(2000);
     }
+
+    //lance dialog + print ID positive
 }
