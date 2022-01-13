@@ -87,7 +87,6 @@ public class FilterDialog extends AppCompatDialogFragment {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public static String getDateFromDatePicker(DatePicker datePicker) {
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth() + 1;
