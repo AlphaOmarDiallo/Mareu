@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarMeetingCreation"
         style="@style/ToolbarStyle"
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:backgroundTint="@color/steelBlue"
@@ -123,13 +123,13 @@
 
     <Button
         android:id="@+id/buttonStartTimeMeetingCreation"
-        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
         android:text="@string/starts_at"
+        android:textColor="@color/white"
         app:backgroundTint="@color/cornFlowerBlue"
         app:layout_constraintEnd_toStartOf="@+id/buttonEndTimeMeetingCreation"
         app:layout_constraintStart_toStartOf="parent"
@@ -137,12 +137,12 @@
 
     <Button
         android:id="@+id/buttonEndTimeMeetingCreation"
-        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="16dp"
         android:text="@string/ends_at"
+        android:textColor="@color/white"
         app:backgroundTint="@color/cornFlowerBlue"
         app:layout_constraintBaseline_toBaselineOf="@+id/buttonStartTimeMeetingCreation"
         app:layout_constraintEnd_toEndOf="parent"
@@ -155,13 +155,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        app:strokeWidth="1dp"
-        app:strokeColor="@color/darkSlateGray"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonAddParticipantsMeetingCreation"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonStartTimeMeetingCreation">
+        app:layout_constraintTop_toBottomOf="@+id/buttonStartTimeMeetingCreation"
+        app:strokeColor="@color/darkSlateGray"
+        app:strokeWidth="1dp">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/materialTextViewParticipantsMeetingCreation"

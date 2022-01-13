@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.alphaomardiallo.mareu.R;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 
 public class FilterDialog extends AppCompatDialogFragment {
@@ -31,7 +30,6 @@ public class FilterDialog extends AppCompatDialogFragment {
     private FilterDialogListener listener;
     private RadioButton radioButtonDate;
     private RadioButton radioButtonMeetingRoom;
-    private ScrollView scrollView;
 
 
     @NonNull
@@ -48,10 +46,10 @@ public class FilterDialog extends AppCompatDialogFragment {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        LocalDate date;
+                        String date;
                         String room;
                         if (radioButtonDate.isChecked()) {
-                            date = getDateFromDatePicker(datePicker);
+                            date =  getDateFromDatePicker(datePicker);
                         } else {
                             date = null;
                         }
@@ -63,7 +61,7 @@ public class FilterDialog extends AppCompatDialogFragment {
                         listener.applyTexts(date, room);
                     }
                 });
-        scrollView = view.findViewById(R.id.scrollView);
+        ScrollView scrollView = view.findViewById(R.id.scrollView);
         datePicker = view.findViewById(R.id.datePickerFilterDialog);
         spinner = view.findViewById(R.id.spinnerFilterDialog);
         radioButtonDate = view.findViewById(R.id.radioButtonDate);
@@ -90,7 +88,7 @@ public class FilterDialog extends AppCompatDialogFragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static LocalDate getDateFromDatePicker(DatePicker datePicker) {
+    public static String getDateFromDatePicker(DatePicker datePicker) {
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth() + 1;
         int year = datePicker.getYear();
@@ -98,10 +96,10 @@ public class FilterDialog extends AppCompatDialogFragment {
         Calendar calendar = Calendar.getInstance();
         calendar.set(day, month, year);
 
-        return LocalDate.of(year, month, day);
+        return String.format("%02d/%02d/%d", day, month, year);
     }
 
     public interface FilterDialogListener {
-        void applyTexts(LocalDate date, String room);
+        void applyTexts(String date, String room);
     }
 }

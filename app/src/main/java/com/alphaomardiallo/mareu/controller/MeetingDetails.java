@@ -2,14 +2,12 @@ package com.alphaomardiallo.mareu.controller;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.alphaomardiallo.mareu.R;
 import com.alphaomardiallo.mareu.models.Meeting;
@@ -37,8 +35,6 @@ public class MeetingDetails extends AppCompatActivity {
         TextView textViewStartingTime = findViewById(R.id.textViewStartingTimeDisplayDetailActivity);
         TextView textViewEndingTime = findViewById(R.id.textViewEndingTimeDisplayDetailActivity);
 
-        ConstraintLayout meetingDetail = findViewById(R.id.meeting_detail);
-
         //Toolbar Settings
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24_white);
@@ -49,28 +45,20 @@ public class MeetingDetails extends AppCompatActivity {
         //Retrieving data from intent
         Bundle extras = getIntent().getExtras();
         Meeting meeting = extras.getParcelable("Meeting");
-        String meetingName = meeting.getMeetingName();
-        String meetingRoom = meeting.getMeetingRoomName();
-        String meetingDate = extras.getString("MeetingDate");
-        String meetingTopic = meeting.getTopic();
-        String meetingStartTime = extras.getString("MeetingStart");
-        String meetingEndTime = extras.getString("MeetingEnd");
-        String meetingParticipants = meeting.getParticipatingCollaborators();
-        String meetingUrl = meeting.getMeetingRoomUrl(); 
 
         //Setting the data
         Glide.with(this)
-                .load(meetingUrl)
+                .load(meeting.getMeetingRoomUrl())
                 .placeholder(getPlaceholderDrawable(meeting))
                 .into(imageView);
 
-        textViewMeetingName.setText(meetingName);
-        textViewRoomName.setText(meetingRoom);
-        textViewTopicDisplay.setText(meetingTopic);
-        textViewDateDisplay.setText(meetingDate);
-        textViewStartingTime.setText(meetingStartTime);
-        textViewEndingTime.setText(meetingEndTime);
-        textViewParticipantsDisplay.setText(meetingParticipants);
+        textViewMeetingName.setText(meeting.getMeetingName());
+        textViewRoomName.setText(meeting.getMeetingRoomName());
+        textViewTopicDisplay.setText(meeting.getTopic());
+        textViewDateDisplay.setText(meeting.getMeetingDate());
+        textViewStartingTime.setText(meeting.getMeetingStart());
+        textViewEndingTime.setText(meeting.getMeetingEnd());
+        textViewParticipantsDisplay.setText(meeting.getParticipatingCollaborators());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

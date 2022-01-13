@@ -1,17 +1,20 @@
 package com.alphaomardiallo.mareu.controller;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.icu.util.Calendar;
+import java.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -38,16 +41,15 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MeetingCreation extends AppCompatActivity {
-    private static final String TAG = "MeetingCreation";
 
     private ImageView imageView;
     private Spinner spinnerSelectMeetingRoom;
@@ -63,9 +65,13 @@ public class MeetingCreation extends AppCompatActivity {
     private TimePickerDialog.OnTimeSetListener timeSetListenerStart;
     private TimePickerDialog.OnTimeSetListener timeSetListenerEnd;
 
-    private LocalDate meetingDate;
-    private LocalTime startingTime;
-    private LocalTime endingTime;
+    private String meetingDateString;
+    private String startingTimeString;
+    private String endingTimeString;
+
+    private Date meetingDate;
+    private Date startingTime;
+    private Date endingTime;
 
     private final MeetingApiService apiService = DI.getMeetingsApiService();
     private final List<Meeting> meetings = apiService.getMeetings();
@@ -79,6 +85,7 @@ public class MeetingCreation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meeting_creation);
+
         //Views
         Toolbar toolbar = findViewById(R.id.toolbarMeetingCreation);
         imageView = findViewById(R.id.imageViewMeetingCreation);
@@ -134,20 +141,23 @@ public class MeetingCreation extends AppCompatActivity {
             dateSet = true;
         });
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                LocalDate date = LocalDate.of(year, month, day);
-                meetingDate = date;
-                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                buttonSetDate.setText(date.format(dateFormatter));
+                String dateString = String.format("%02d/%02d/%d", day, month, year);
+                try {
+                    meetingDate = new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                meetingDateString = dateString;
+                Log.d(TAG, "onDateSet: " + dateString);
+                buttonSetDate.setText(dateString);
             }
         };
 
         //Time picker start
         buttonSetStartTime.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
                 int hours = cal.get(Calendar.HOUR_OF_DAY);
@@ -165,21 +175,20 @@ public class MeetingCreation extends AppCompatActivity {
             }
         });
         timeSetListenerStart = new TimePickerDialog.OnTimeSetListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
-                LocalTime time = LocalTime.of(hours, minutes);
-                startingTime = time;
-                endingTime = time.plusMinutes(45);
-                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-                buttonSetStartTime.setText(time.format(timeFormatter));
-                buttonSetEndTime.setText(endingTime.format(timeFormatter));
+                startingTimeString = String.format("%02d:%02d", hours, minutes);
+                try {
+                    startingTime = new SimpleDateFormat("hh:mm").parse(startingTimeString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                buttonSetStartTime.setText(startingTimeString);
             }
         };
 
         //Time picker end
         buttonSetEndTime.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
                 int hours = cal.get(Calendar.HOUR_OF_DAY);
@@ -196,27 +205,22 @@ public class MeetingCreation extends AppCompatActivity {
             }
         });
         timeSetListenerEnd = new TimePickerDialog.OnTimeSetListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
-                LocalTime time = LocalTime.of(hours, minutes);
-                endingTime = time;
-                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-                buttonSetEndTime.setText(time.format(timeFormatter));
+                endingTimeString = String.format("%02d:%02d", hours, minutes);
+                try {
+                    endingTime = new SimpleDateFormat("hh:mm").parse(endingTimeString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                buttonSetEndTime.setText(endingTimeString);
             }
         };
 
         FABMeetingValidation.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                if (timeSet && dateSet & roomSet && textSet) {
-                    createNewMeeting(editTextMeetingName.getText().toString(), spinnerSelectMeetingRoom.getSelectedItem().toString(), meetingDate, startingTime, endingTime, editTextTopic.getText().toString(), textViewParticipants.getText().toString());
-                    Toast.makeText(MeetingCreation.this, "Meeting created", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(MeetingCreation.this, "Fill all fields", Toast.LENGTH_SHORT).show();
-                }
-
+               createMeeting();
             }
         });
 
@@ -253,20 +257,28 @@ public class MeetingCreation extends AppCompatActivity {
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
         });
+    }
 
+    private void createMeeting(){
+        if (timeSet && dateSet & roomSet && textSet) {
+            createNewMeeting(editTextMeetingName.getText().toString(), spinnerSelectMeetingRoom.getSelectedItem().toString(), meetingDateString, startingTimeString, endingTimeString, editTextTopic.getText().toString(), textViewParticipants.getText().toString());
+            Toast.makeText(MeetingCreation.this, "Meeting created", Toast.LENGTH_LONG).show();
+
+        } else {
+            Toast.makeText(MeetingCreation.this, "Fill all fields", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void modifyImageView(String roomUrlImage) {
         Glide.with(imageView).load(roomUrlImage).circleCrop().placeholder(R.drawable.meeting).into(imageView);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void createNewMeeting(String meetingName, String meetingRoomName, LocalDate mDate,
-                                  LocalTime startingTime, LocalTime endingTime, String topic, String participatingCollaborators) {
+    private void createNewMeeting(String meetingName, String meetingRoomName, String mDate,
+                                  String startingTime, String endingTime, String topic, String participatingCollaborators) {
         String meetingRoomName1 = meetingRoomName;
-        this.meetingDate = mDate;
-        this.startingTime = startingTime;
-        this.endingTime = endingTime;
+        this.meetingDateString = mDate;
+        this.startingTimeString = startingTime;
+        this.endingTimeString = endingTime;
 
         MeetingRooms meetingRoom;
 
@@ -308,7 +320,7 @@ public class MeetingCreation extends AppCompatActivity {
         assert meetingRoom != null;
         String meetingRoomUrl = meetingRoom.getUrl();
         meetingRoomName1 = meetingRoom.getCity();
-        Meeting newMeeting = new Meeting(meetingName, meetingRoomName1, meetingRoomUrl, this.meetingDate, this.startingTime, this.endingTime, topic, participatingCollaborators);
+        Meeting newMeeting = new Meeting(meetingName, meetingRoomName1, meetingRoomUrl, this.meetingDateString, this.startingTimeString, this.endingTimeString, topic, participatingCollaborators);
         meetings.add(newMeeting);
         FABMeetingValidation.setVisibility(View.GONE);
         modifyImageView(meetingRoomUrl);

@@ -20,8 +20,6 @@ import org.junit.runner.RunWith;
 import org.junit.runner.manipulation.Alphanumeric;
 import org.junit.runners.JUnit4;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -76,15 +74,16 @@ public class MainActivityTest {
 
     @Test
     public void testD_filterMeetingsByDateWithSuccess() {
-        LocalDate filterDate = LocalDate.now();
-        meetingList.add(new Meeting("Meeting I", MeetingRooms.VIENNA.getCity(), MeetingRooms.VIENNA.getUrl(), filterDate, LocalTime.of(14, 00), LocalTime.of(14, 45),"Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"));
+        String filterDate = "01/01/2022";
+        meetingList.add(new Meeting("Meeting I", MeetingRooms.VIENNA.getCity(), MeetingRooms.VIENNA.getUrl(), filterDate, "14:00","14:45","Marketing plan 2022", "john.doe@lamzone.com, jane.doe@lamzone.com, alpha.diallo@lamzone.com"));
         List<Meeting> expectedMeetings = meetingList.stream()
-                .filter(meeting -> meeting.getMeetingDate().toEpochDay() == filterDate.toEpochDay())
+                .filter(meeting -> meeting.getMeetingDate().equalsIgnoreCase(filterDate))
                 .collect(Collectors.toList());
         boolean containsAll = true;
         for (Meeting meeting : expectedMeetings) {
-            if (meeting.getMeetingDate().toEpochDay() != filterDate.toEpochDay()) {
+            if (!meeting.getMeetingDate().equalsIgnoreCase(filterDate)) {
                 containsAll = false;
+                break;
             }
         }
         assertTrue(containsAll);

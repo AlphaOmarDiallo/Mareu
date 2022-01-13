@@ -33,9 +33,9 @@ public class MeetingCreationTest {
     String meetingName = "FakeMeeting";
     String meetingRoomName = MeetingRooms.LONDON.getCity();
     String meetingRoomUrl = MeetingRooms.LONDON.getUrl();
-    LocalDate meetingDate = LocalDate.of(2030, 01, 10);
-    LocalTime meetingStart = LocalTime.of(12, 00);
-    LocalTime meetingEnd = LocalTime.of(14, 00);
+    String meetingDate = "10/01/2030";
+    String meetingStart = "12:00";
+    String meetingEnd = "14:00";
     String topic = "test meeting";
     String participatingCollaborators = Collaborators.ALPHADIALLO.getEmail();
 

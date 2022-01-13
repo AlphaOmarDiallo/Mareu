@@ -2,6 +2,7 @@ package com.alphaomardiallo.mareu.controller;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
@@ -40,8 +41,8 @@ import org.junit.runner.OrderWith;
 import org.junit.runner.RunWith;
 import org.junit.runner.manipulation.Alphanumeric;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -96,15 +97,14 @@ public class MainActivityTest {
     @Test
     public void testC_recyclerView_ShouldOpenMeetingDetail_WithCorrectData() {
         Meeting meeting = meetingList.get(MEETING_TO_TEST);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         onView(allOf(ViewMatchers.withId(R.id.recyclerViewMainActivity), isCompletelyDisplayed()))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(MEETING_TO_TEST, new OpenMeetingInformation()));
         onView(withId(R.id.meeting_detail)).check(matches(isDisplayed()));
         onView(withId(R.id.textViewMeetingNameDetailActivity)).check(matches(withText(meeting.getMeetingName())));
-        onView(withId(R.id.textViewDateDisplayDetailActivity)).check(matches(withText(meeting.getMeetingDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))));
+        onView(withId(R.id.textViewDateDisplayDetailActivity)).check(matches(withText(meeting.getMeetingDate())));
         onView(withId(R.id.textViewTopicDisplayDetailActivity)).check(matches(withText(meeting.getTopic())));
-        onView(withId(R.id.textViewStartingTimeDisplayDetailActivity)).check(matches(withText(meeting.getMeetingStart().format(formatter))));
-        onView(withId(R.id.textViewEndingTimeDisplayDetailActivity)).check(matches(withText(meeting.getMeetingEnd().format(formatter))));
+        onView(withId(R.id.textViewStartingTimeDisplayDetailActivity)).check(matches(withText(meeting.getMeetingStart())));
+        onView(withId(R.id.textViewEndingTimeDisplayDetailActivity)).check(matches(withText(meeting.getMeetingEnd())));
         onView(withId(R.id.textViewParticipantsDisplayDetailActivity)).check(matches(withText(meeting.getParticipatingCollaborators())));
         onView(isRoot()).perform(ViewActions.pressBack());
     }
@@ -126,6 +126,8 @@ public class MainActivityTest {
         onView(withText("OK")).perform(click());
         onView(withId(R.id.buttonStartTimeMeetingCreation)).perform(click());
         onView(withText("OK")).perform(click());
+        onView(withId(R.id.buttonEndTimeMeetingCreation)).perform(click());
+        onView(withText("OK")).perform(click());
         onView(withId(R.id.floatingActionButtonValidationMeetingCreation)).perform(click());
         Thread.sleep(1000);
         onView(isRoot()).perform(ViewActions.pressBack());
@@ -139,7 +141,7 @@ public class MainActivityTest {
      * Test to check if meeting creation activity is opened when FAB clicked and meeting is created
      */
     @Test
-    public void testE_FAB_OpensCreationActivityAndMeetingIsCreated() {
+    public void testE_FAB_OpensCreationActivityAndMeetingIsCreatedCorrectly() {
         long meetingsSize = meetingList.size();
         onView(allOf(ViewMatchers.withId(R.id.recyclerViewMainActivity), isCompletelyDisplayed())).check(withItemCount((int) meetingsSize));
         onView(withId(R.id.FABCreateMeetingMainActivity)).perform(click());
@@ -151,6 +153,8 @@ public class MainActivityTest {
         onView(withId(R.id.buttonSetDateMeetingCreation)).perform(click());
         onView(withText("OK")).perform(click());
         onView(withId(R.id.buttonStartTimeMeetingCreation)).perform(click());
+        onView(withText("OK")).perform(click());
+        onView(withId(R.id.buttonEndTimeMeetingCreation)).perform(click());
         onView(withText("OK")).perform(click());
         onView(withId(R.id.buttonAddParticipantsMeetingCreation)).perform(click());
         onView(withText(Collaborators.JOHNDOE.getEmail())).perform(click());
@@ -165,9 +169,11 @@ public class MainActivityTest {
 
     @Test
     public void testF_filterByDateOrByMeetingRoom() throws InterruptedException {
-        LocalDate today = LocalDate.now();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date dateD = new Date();
+        String date = formatter.format(dateD);
         List<Meeting> filteredMeetings = meetingList.stream()
-                .filter(meeting -> meeting.getMeetingDate().toEpochDay() == today.toEpochDay())
+                .filter(meeting -> meeting.getMeetingDate().equalsIgnoreCase(date))
                 .collect(Collectors.toList());
         onView(withId(R.id.imageButtonFilterMainActivity)).perform(click());
         onView(withText(R.string.validate)).perform(click());

@@ -1,27 +1,19 @@
 package com.alphaomardiallo.mareu.models;
 
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.RequiresApi;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class Meeting implements Parcelable {
 
     String meetingName;
-    String meetingRoomName;
     String meetingRoomUrl;
-    LocalDate meetingDate;
-    LocalTime meetingStart;
-    LocalTime meetingEnd;
+    String meetingDate;
+    String meetingStart;
+    String meetingEnd;
     String topic;
     String participatingCollaborators;
 
-    public Meeting(String meetingName, String meetingRoomName, String meetingRoomUrl, LocalDate meetingDate, LocalTime meetingStart, LocalTime meetingEnd, String topic, String participatingCollaborators) {
+    public Meeting(String meetingName, String meetingRoomName, String meetingRoomUrl, String meetingDate, String meetingStart, String meetingEnd, String topic, String participatingCollaborators) {
         this.meetingName = meetingName;
         this.meetingRoomName = meetingRoomName;
         this.meetingRoomUrl = meetingRoomUrl;
@@ -32,26 +24,17 @@ public class Meeting implements Parcelable {
         this.participatingCollaborators = participatingCollaborators;
     }
 
+    String meetingRoomName;
+
     protected Meeting(Parcel in) {
         meetingName = in.readString();
-        meetingRoomName = in.readString();
         meetingRoomUrl = in.readString();
+        meetingDate = in.readString();
+        meetingStart = in.readString();
+        meetingEnd = in.readString();
         topic = in.readString();
         participatingCollaborators = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(meetingName);
-        dest.writeString(meetingRoomName);
-        dest.writeString(meetingRoomUrl);
-        dest.writeString(topic);
-        dest.writeString(participatingCollaborators);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        meetingRoomName = in.readString();
     }
 
     public static final Creator<Meeting> CREATOR = new Creator<Meeting>() {
@@ -90,27 +73,27 @@ public class Meeting implements Parcelable {
         this.meetingRoomUrl = meetingRoomUrl;
     }
 
-    public LocalDate getMeetingDate() {
+    public String getMeetingDate() {
         return meetingDate;
     }
 
-    public void setMeetingDate(LocalDate meetingDate) {
+    public void setMeetingDate(String meetingDate) {
         this.meetingDate = meetingDate;
     }
 
-    public LocalTime getMeetingStart() {
+    public String getMeetingStart() {
         return meetingStart;
     }
 
-    public void setMeetingStart(LocalTime meetingStart) {
+    public void setMeetingStart(String meetingStart) {
         this.meetingStart = meetingStart;
     }
 
-    public LocalTime getMeetingEnd() {
+    public String getMeetingEnd() {
         return meetingEnd;
     }
 
-    public void setMeetingEnd(LocalTime meetingEnd) {
+    public void setMeetingEnd(String meetingEnd) {
         this.meetingEnd = meetingEnd;
     }
 
@@ -130,4 +113,21 @@ public class Meeting implements Parcelable {
         this.participatingCollaborators = participatingCollaborators;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+        parcel.writeString(meetingName);
+        parcel.writeString(meetingRoomUrl);
+        parcel.writeString(meetingDate);
+        parcel.writeString(meetingStart);
+        parcel.writeString(meetingEnd);
+        parcel.writeString(topic);
+        parcel.writeString(participatingCollaborators);
+        parcel.writeString(meetingRoomName);
+    }
 }
